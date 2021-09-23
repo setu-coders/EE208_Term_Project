@@ -1,3 +1,9 @@
+#word and ppts
+*.ppt
+*.pptx
+*.docx
+*.doc
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
