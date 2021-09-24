@@ -7,7 +7,7 @@ class Bitarray:
     def __init__(self, size):
         """ Create a bit array of a specific size """
         self.size = size
-        self.bitarray = bytearray(math.ceil(size / 8.))
+        self.bitarray = bytearray(size // 8 if size % 8 == 0 else size // 8 + 1) # math.ceil is incorrect!
 
     def set(self, n):
         """ Sets the nth element of the bitarray """
@@ -19,7 +19,7 @@ class Bitarray:
     def get(self, n):
         """ Gets the nth element of the bitarray """
 
-        index = n / 8
+        index = n // 8    # should use // instead of /
         position = n % 8
         return (self.bitarray[index] & (1 << (7 - position))) > 0
 
