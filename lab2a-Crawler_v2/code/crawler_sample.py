@@ -1,4 +1,5 @@
 # SJTU EE208
+# -*-coding:utf-8-*-
 
 def get_page(page):
     return g.get(page, [])
@@ -11,11 +12,13 @@ def get_all_links(content):
 def union_dfs(a, b):
     for e in b:
         if e not in a:
-            a.append(e)
+            a.append(e)    #元素入栈
 
 
 def union_bfs(a, b):
-    pass
+    for e in b:
+        if e not in a:
+            a.insert(0,e)   # 元素入队
 
 
 def crawl(seed, method):
@@ -27,7 +30,7 @@ def crawl(seed, method):
         if page not in crawled:
             content = get_page(page)
             outlinks = get_all_links(content)
-            print(page,outlinks)
+            graph[page] = outlinks
             globals()['union_%s' % method](tocrawl, outlinks)
             crawled.append(page)
     return graph, crawled
@@ -41,11 +44,10 @@ g = {'A': ['B', 'C', 'D'],
 
 
 graph_dfs, crawled_dfs = crawl('A', 'dfs')
-#print('graph_dfs:', graph_dfs)
+print('graph_dfs:', graph_dfs)
 print('crawled_dfs:', crawled_dfs)
 
-"""
+
 graph_bfs, crawled_bfs = crawl('A', 'bfs')
 print('graph_bfs:', graph_bfs)
 print('crawled_bfs:', crawled_bfs)
-"""

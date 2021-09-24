@@ -8,8 +8,8 @@ from http import cookiejar
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 
-import ssl
-ssl._create_default_https_context = ssl._create_unverified_context
+import ssl  
+ssl._create_default_https_context = ssl._create_unverified_context    #不加这个会报错(SSL)
 
 
 # 1. 构建一个CookieJar对象实例来保存cookie
