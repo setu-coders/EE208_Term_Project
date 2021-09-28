@@ -5,7 +5,7 @@ import re
 import string
 import sys
 import urllib
-import urllib.error
+#import urllib.error
 import urllib.parse
 import urllib.request
 import hashlib
@@ -22,14 +22,14 @@ def valid_filename(s):
     return s[:MAXFILENAMELENGTH] + '.html'    # 防止文件名过长
 
 
-def get_page(page):
+def get_page(page,coding = 'utf-8'):
     
     try:
         content = urllib.request.urlopen(page,timeout=TIMEOUTSECONDS).read()
     except:
         raise ValueError
     else:
-        return str(content)
+        return content.decode(coding)
 
 
 

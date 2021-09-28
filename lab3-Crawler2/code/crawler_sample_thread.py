@@ -17,6 +17,7 @@ def get_all_links(content):
 
 def working():
     while True:
+        print("getting","left:",q.qsize())
         page = q.get()
         # if varLock.acquire():
         if page not in crawled:
@@ -31,6 +32,7 @@ def working():
                 graph[page] = outlinks
                 crawled.append(page)
                 varLock.release()
+            print(q.qsize())
             q.task_done()
 
 

@@ -1,0 +1,949 @@
+<!doctype html>
+<html class="expanded">
+<head>
+
+<!--STATUS OK-->
+<meta http-equiv=Content-Type content="text/html;charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<link rel="icon" href="//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/fisp_static/common/img/favicon.ico" mce_href="../static/img/favicon.ico" type="image/x-icon">
+
+<title>百度新闻——海量中文资讯平台</title>
+<meta name="description" content="百度新闻是包含海量资讯的新闻服务平台，真实反映每时每刻的新闻热点。您可以搜索新闻事件、热点话题、人物动态、产品资讯等，快速了解它们的最新进展。" >
+<script type="text/javascript">
+		document.write("<script  type='text/javascript' src='//news-bos.cdn.bcebos.com/mvideo/pcconf_2019.js?"+new Date().getTime()+"'><\/script>");
+	</script>
+<script type="text/javascript"> window.NEWSLOGURL = 'https://log.news.baidu.com/v.gif'; window.HUNTERLOGURL = '//log.news.baidu.com/u.gif'; window._hmt = window._hmt || [];</script>
+<script type="text/javascript" src="//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/fisp_static/common/resource/js/usermonitor_88a158c.js?v=1.2"></script>
+
+<script src="//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/fisp_static/tech/js/jquery-1.8.3.min_a6ffa58.js" type="text/javascript"></script>
+
+<link rel="stylesheet" type="text/css" href="//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/fisp_static/common/module_static_include/module_static_include_03971ae.css"/><link rel="stylesheet" type="text/css" href="//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/fisp_static/tech/focustop/focustop_5ad822f.css"/></head>
+<body>
+<div id="header-wrapper" class="clearfix">
+<div id="usrbar" alog-group="userbar" alog-alias="hunter-userbar-start"></div>
+<ul id="header-link-wrapper" class="clearfix">
+<li><a href="https://www.baidu.com/" data-path="s?wd=">网页</a></li>
+<li style="margin-left:21px;"><span>新闻</span></li>
+<li><a href="http://tieba.baidu.com/" data-path="f?kw=">贴吧</a></li>
+<li><a href="https://zhidao.baidu.com/" data-path="search?ct=17&pn=0&tn=ikaslist&rn=10&lm=0&word=">知道</a></li>
+<li><a href="http://music.baidu.com/" data-path="search?fr=news&ie=utf-8&key=">音乐</a></li>
+<li><a href="http://image.baidu.com/" data-path="search/index?ct=201326592&cl=2&lm=-1&tn=baiduimage&istype=2&fm=&pv=&z=0&word=">图片</a></li>
+<li><a href="http://v.baidu.com/" data-path="v?ct=3019898888&ie=utf-8&s=2&word=">视频</a></li>
+<li><a href="http://map.baidu.com/" data-path="?newmap=1&ie=utf-8&s=s%26wd%3D">地图</a></li>
+<li><a href="http://wenku.baidu.com/" data-path="search?ie=utf-8&word=">文库</a></li>
+<div class="header-divider"></div>
+</ul>
+</div>
+<div id="app_tooltip_qrcode">
+<img src="//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/fisp_static/common/img/sidebar/newErweima_9fa03e0.png">
+</div>
+<div id="headerwrapper">
+<div id="header" alog-group="header" alog-alias="hunter-header-start">
+
+<table class="sbox" id="sbox" alog-group="search-box">
+<tr>
+<td class="logo">
+<div class="logo">
+<a href="http://news.baidu.com/">
+<!--[if !IE]><!--><img src="https://news-bos.cdn.bcebos.com/mvideo/log-news.png" alt="百度新闻" height="46px" width="137px"><!--<![endif]-->
+<!--[if IE 6]><img src="https://news-bos.cdn.bcebos.com/mvideo/log-news-ie6.png" alt="百度新闻" height="46px" width="137px"><![endif]-->
+<!--[if gt IE 6]><img src="https://news-bos.cdn.bcebos.com/mvideo/log-news.png" alt="百度新闻" height="46px" width="137px"><![endif]-->
+</a>
+</div>
+<div class="date"></div>
+</td>
+<td class="search">
+<table>
+<tr>
+<td class="box"><div id="sugarea"><span class="s_ipt_wr" id="s_ipt_wr"><input class="word" id="ww" name="word" size="42"  maxlength="100" tabindex="1"></span><span class="s_btn_wr"><input class="btn" id="s_btn_wr" type="button" value="百度一下" onmousedown="this.className='btn s_btn_h'" onmouseout="this.className='btn'"></span></div></td>
+<td class="help"><a href="//help.baidu.com">帮助</a></td>
+</tr>
+</table>
+<p class="search-radios">
+<input type="radio" name="tn" value="news" checked="checked" id="news">
+<label for="news" class="checked">新闻全文</label>
+<input type="radio" name="tn" value="newstitle" id="newstitle">
+<label for="newstitle" class="not-checked">新闻标题</label>
+</p>
+<input type="hidden" name="from" id="from" value="news">
+<input type="hidden" name="cl" id="cl" value="2">
+<input type="hidden" name="rn" id="rn" value="20">
+<input type="hidden" name="ct" id="ct" value="1">
+</td>
+</tr>
+</table>
+
+</div>
+
+<div id="menu" class="mod-navbar" alog-group="tech-menu">
+<div id="channel-shanghai" class="channel-shanghai clearfix"  style="display:none" >
+<div class="menu-list">
+<ul class="clearfix">
+<li class="navitem-index "><a href="/">首页</a></li>
+<li ><a href="/guonei">国内</a></li>
+<li ><a href="/guoji">国际</a></li>
+<li ><a href="/mil">军事</a></li>
+<li ><a href="/finance">财经</a></li>
+<li ><a href="/ent">娱乐</a></li>
+<li ><a href="/sports">体育</a></li>
+<li ><a href="/internet">互联网</a></li>
+<li  class="current active"><a href="/tech">科技</a></li>
+<li ><a href="/game">游戏</a></li>
+<li ><a href="/lady">女人</a></li>
+<li ><a href="/auto">汽车</a></li>
+<li ><a href="/house">房产</a></li>
+</ul>
+</div>
+<i class="slogan"></i>
+</div>
+<div id="channel-all" class="channel-all clearfix" >
+<div class="menu-list">
+<ul class="clearfix">
+<li class="navitem-index "><a href="/">首页</a></li>
+<li ><a href="/guonei">国内</a></li>
+<li ><a href="/guoji">国际</a></li>
+<li ><a href="/mil">军事</a></li>
+<li ><a href="/finance">财经</a></li>
+<li ><a href="/ent">娱乐</a></li>
+<li ><a href="/sports">体育</a></li>
+<li ><a href="/internet">互联网</a></li>
+<li  class="current active"><a href="/tech">科技</a></li>
+<li ><a href="/game">游戏</a></li>
+<li ><a href="/lady">女人</a></li>
+<li ><a href="/auto">汽车</a></li>
+<li ><a href="/house">房产</a></li>
+</ul>
+</div>
+<i class="slogan"></i>
+</div>
+</div>
+
+</div>
+<div id="body" alog-alias="b">
+
+<script type="text/javascript">
+        void function(e,t,n,a,o,i,m){e.alogObjectName=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=e[o].l||+new Date,i=t.createElement(n),i.asyn=1,i.src=a,m=t.getElementsByTagName(n)[0],m.parentNode.insertBefore(i,m)}(window,document,"script","https://img.baidu.com/hunter/alog.min.js","alog");
+    </script>
+<script src="https://cbjs.baidu.com/js/m.js"></script>
+<script type="text/javascript">
+		void function (e, t, n, a, o, i, m) { e.alogObjectName = o, e[o] = e[o] || function () { (e[o].q = e[o].q || []).push(arguments) }, e[o].l = e[o].l || +new Date, i = t.createElement(n), i.asyn = 1, i.src = a, m = t.getElementsByTagName(n)[0], m.parentNode.insertBefore(i, m) }(window, document, "script", "https://img.baidu.com/hunter/alog.min.js", "alog");
+	</script>
+<div class="column clearfix" id="col_focus" alog-group="log-technnews-focus">
+<div class="l-left-col">
+<div class="toparea-carousel" alog-group="alog-group=log-carousel">
+<div class="imgplayer clearfix" id="imgplayer">
+<div id="imgplayer-control">
+<a href="javascript:void(0);" mon="col=carousel&pos=ctr_l&ct=1&pn=0" id="imgplayer-prev"></a>
+<a href="javascript:void(0);" mon="col=carousel&pos=ctr_r&ct=1&pn=0" id="imgplayer-next"></a>
+</div>
+<div class="imgview" id="imgView">
+<a href="javascript:void(0);" target="_blank"></a>
+</div>
+<div class="imgnav-mask"></div>
+<div class="imgnav" id="imgNav">
+<a class="navbtn" index="3" mon="col=carousel&pos=dots&a=9pn=3" href="javascript:void(0);">3</a>
+<a class="navbtn" index="2" mon="col=carousel&pos=dots&a=9pn=2" href="javascript:void(0);">2</a>
+<a class="navbtn" index="1" mon="col=carousel&pos=dots&a=9pn=1" href="javascript:void(0);">1</a>
+</div>
+<div class="imgtit" id="imgTitle">
+<a href="javascript:void(0);" target="_blank"></a>
+</div>
+</div>
+</div>
+<div class="mod" id="mod_internet">
+<div class="hd"><h3>互联网新闻<span class="dec">INTERNET NEWS</span></h3></div>
+<div class="bd">
+<div id="internet_news">
+<ul class="ulist mix-ulist"  >
+<li><a href="http://baijiahao.baidu.com/s?id=1712101478896198894" mon="z=internetFocus&amp;col=2&pn=1" target="_blank">杭州女子新加微信好友 损失一万多 这种套路别再信</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712055061225578962" mon="z=internetFocus&amp;col=2&pn=2" target="_blank">微信又有更新！网友：我可太需要了</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711953789310968879" mon="z=internetFocus&amp;col=2&pn=3" target="_blank">创城创卫进行时｜红石崖中队积极推进联合执法工作机制</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712105802746436326" mon="z=internetFocus&amp;col=2&pn=4" target="_blank">微信新模式上线！</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712115665106560792" mon="z=internetFocus&amp;col=2&pn=5" target="_blank">“互封”多年后支付壁垒被打破！阿里旗下多个App已..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712051158413508271" mon="z=internetFocus&amp;col=2&pn=6" target="_blank">热搜第一！微信终于上线这个新功能→</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711566545331901214" mon="z=internetFocus&amp;col=2&pn=7" target="_blank">中国航天科工集团构建面向“互联网+”的 众创空间运..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711752756922670014" mon="z=internetFocus&amp;col=2&pn=8" target="_blank">中国老人，困在手机里</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711693532333402424" mon="z=internetFocus&amp;col=2&pn=9" target="_blank">承担国家级试点项目重任，顺德这家医院将如何探路“5..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711637909287011822" mon="z=internetFocus&amp;col=2&pn=10" target="_blank">桐乡：向更高水平的产业迭代升级</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="l-middle-col">
+<div class="middle-focus-news">
+<ul class="ulist fb-list">
+<li class="bold-item"><a href="http://baijiahao.baidu.com/s?id=1711590272673515267" mon="col=3&amp;a=2&amp;z=techfocus&pn=1" target="_blank">“资本真是好手段”，李子柒秒删的回复背后发生了什么..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712114756767668485" mon="col=3&amp;a=2&amp;z=techfocus&pn=2" target="_blank">微信又更新啦！正式推出新模式！</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712109062909034559" mon="col=3&amp;a=2&amp;z=techfocus&pn=3" target="_blank">小榄事主微信莫名“蒸发”20000元，罪魁祸首竟是..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712113593221878765" mon="col=3&amp;a=2&amp;z=techfocus&pn=4" target="_blank">8K大屏、5G无人机亮相九寨沟，解锁智慧景区新体..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712109079730753406" mon="col=3&amp;a=2&amp;z=techfocus&pn=5" target="_blank">造谣拿到“上海第一块新式号牌”，男子平某被行拘，假..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712105699860719730" mon="col=3&amp;a=2&amp;z=techfocus&pn=6" target="_blank">一等奖是它！“直通乌镇”全球互联网大赛总决赛结果出..</a></li>
+</ul>
+<ul class="ulist fb-list">
+<li><a href="http://baijiahao.baidu.com/s?id=1712120924011234537" mon="col=3&amp;a=2&amp;z=techfocus&pn=7" target="_blank">群聊折叠？！微信这些新功能你喜欢吗？</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712121877761119095" mon="col=3&amp;a=2&amp;z=techfocus&pn=8" target="_blank">三“顾”社区团购喧嚣：跟菜贩子抢老人，互联网大厂贴..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712114726998927835" mon="col=3&amp;a=2&amp;z=techfocus&pn=9" target="_blank">中国电信山东分公司总经理文勇一行到访汇丰石化集团</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712119675540466978" mon="col=3&amp;a=2&amp;z=techfocus&pn=10" target="_blank">“比特”遇上“瓦特” 联通5G助电力扬帆</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712110853759287068" mon="col=3&amp;a=2&amp;z=techfocus&pn=11" target="_blank">电商购买iPhone成最佳选择 小镇青年消费潜力巨..</a></li>
+</ul>
+<ul class="ulist fb-list">
+<li><a href="http://baijiahao.baidu.com/s?id=1712119867707099598" mon="col=3&amp;a=2&amp;z=techfocus&pn=12" target="_blank">第十三届中国航展盛大开幕！中国电信珠海分公司关键核..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712109772698546479" mon="col=3&amp;a=2&amp;z=techfocus&pn=13" target="_blank">“厚道山航”亮相第七届中国（济南）电商博览会</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711973721808818925" mon="col=3&amp;a=2&amp;z=techfocus&pn=14" target="_blank">“黑科技”云集乌镇，在千年古镇看见炫酷未来！</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711861109426571900" mon="col=3&amp;a=2&amp;z=techfocus&pn=15" target="_blank">「地评线」世界互联网大会：联世界，通未来，同治理，..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711782759529317546" mon="col=3&amp;a=2&amp;z=techfocus&pn=16" target="_blank">新闻观察：颠覆性技术获突破 实验室里“种”淀粉</a></li>
+</ul>
+<ul class="ulist fb-list">
+<li><a href="http://baijiahao.baidu.com/s?id=1712114684237520042" mon="col=3&amp;a=2&amp;z=techfocus&pn=17" target="_blank">“新引擎+双动力” 众合科技扇动“智慧双翼”</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712114785057691174" mon="col=3&amp;a=2&amp;z=techfocus&pn=18" target="_blank">渝北将打造万人研发的汽车软件产业基地</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712121757267045983" mon="col=3&amp;a=2&amp;z=techfocus&pn=19" target="_blank">抢饭碗！小米造车吉利反击，李书福跨界造高端手机</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712121214822996926" mon="col=3&amp;a=2&amp;z=techfocus&pn=20" target="_blank">华为鲁勇：融合聚变 点亮未来</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712112053437272444" mon="col=3&amp;a=2&amp;z=techfocus&pn=21" target="_blank">《国民财商教育白皮书》（2022年版）亮相乌镇世界..</a></li>
+</ul>
+</div>
+</div>
+<div class="l-right-col">
+<div class="mod">
+<div class="hd"><h3>科学探索<span class="dec">SCIENCE DISCOVERY</span></h3></div>
+<div class="bd">
+<div id="kj_news">
+<ul class="ulist mix-ulist"  >
+<li><a href="http://baijiahao.baidu.com/s?id=1711877290780001077" mon="col=4&amp;z=discovery&pn=1" target="_blank">湖州市南浔区医疗集团（浙江省人民医院南浔院区）20..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711580757042817049" mon="col=4&amp;z=discovery&pn=2" target="_blank">中国这个被名字耽误的省会，原来我们都严重低估了它</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711918152287669256" mon="col=4&amp;z=discovery&pn=3" target="_blank">新闻8点见丨孟晚舟平安回家：信念如果有颜色，那一定..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712028372141410742" mon="col=4&amp;z=discovery&pn=4" target="_blank">定价超百万！抗癌“神药”CAR-T究竟疗效如何？</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712060213647107913" mon="col=4&amp;z=discovery&pn=5" target="_blank">今天，“汉产”火箭给太空送快递了</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712031842554251486" mon="col=4&amp;z=discovery&pn=6" target="_blank">湖南创全国最大自然野化麋鹿种群 有效保护麋鹿种群2..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711951937355328438" mon="col=4&amp;z=discovery&pn=7" target="_blank">郑州欧华整形李永峰医生告诉你：为什么做自体脂肪术不..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712012201785670310" mon="col=4&amp;z=discovery&pn=8" target="_blank">什么是“元宇宙”？元宇宙会是虚拟现实新马甲吗？</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="mod" id="focus-aside-video">
+<div class="hd"><h3>科技视频<span class="dec">TECHNOLOGICAL VIDEOS</span></h3></div>
+<div class="bd">
+<div id="kj_video">
+<div class="pic-list">
+<ul>
+<li><a href="http://baijiahao.baidu.com/s?id=1711973383095728778" mon="col=5&amp;a=9&amp;z=vtech&pn=1" target="_blank"><img src="http://f7.baidu.com/it/u%3D1620872281%2C3783833534%26fm%3D222%26app%3D108%26f%3DJPEG"/><span class="title">华中科大与浪潮共建“新存储联合实验室”</span></a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711782833350629297" mon="col=5&amp;a=9&amp;z=vtech&pn=2" target="_blank"><img src="http://f7.baidu.com/it/u%3D2492268931%2C1402997539%26fm%3D222%26app%3D108%26f%3DJPEG"/><span class="title">惯导专家谢天怀：深耕近40年 为空间飞行器导航</span></a></li>
+</ul>
+</div>
+<ul class="ulist mix-ulist ">
+<li><a href="http://baijiahao.baidu.com/s?id=1711934248917637345" mon="col=5&amp;z=vtech&pn=3" target="_blank">英特尔CEO：这四种“超能力”将帮助人类飞速发展，..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1674697662238367050" mon="col=5&amp;z=vtech&pn=4" target="_blank">被美媒问及新冠病毒起源 武汉病毒研究所所长：我们被..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712017234909501367" mon="col=5&amp;z=vtech&pn=5" target="_blank">中国台湾演员王耀庆：互联网让世界扁平化 方便人们交..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711853708157519149" mon="col=5&amp;z=vtech&pn=6" target="_blank">雨后机械设备无法下地 河南农民用三轮车自制传送机运..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712034842438059123" mon="col=5&amp;z=vtech&pn=7" target="_blank">邬江兴院士：中国应率先改造互联网的“基因缺陷”，使..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711932869535169704" mon="col=5&amp;z=vtech&pn=8" target="_blank">天津设置“办不成事”反映窗口 专解“疑难杂症”</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711930926047165990" mon="col=5&amp;z=vtech&pn=9" target="_blank">智慧现代农机亮相农交会 购机还有补贴！</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711850543041795788" mon="col=5&amp;z=vtech&pn=10" target="_blank">“龙芯之父”胡伟武：让中国人不用依靠进口CPU制造..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711773281725636572" mon="col=5&amp;z=vtech&pn=11" target="_blank">张文宏：依靠科技彻底免除病毒困扰只是时间问题，且不..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711970376666563036" mon="col=5&amp;z=vtech&pn=12" target="_blank">智能钢琴亮相2021中关村论坛 “无人弹奏”的优美..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1643820387463587710" mon="col=5&amp;z=vtech&pn=13" target="_blank">龙应台对香港暴徒视而不见 将矛头对准内地 挑唆香港..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711781195496245799" mon="col=5&amp;z=vtech&pn=14" target="_blank">走进文博会广州馆“时空沉浸式影院”，身临其境体验“..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711689380532855420" mon="col=5&amp;z=vtech&pn=15" target="_blank">打破传统农业！来自太空的植物，在广州市中心就可以亲..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711773989118081670" mon="col=5&amp;z=vtech&pn=16" target="_blank">数据一览美国新冠疫情：累计死亡人数超68万 占全球..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711844649031004721" mon="col=5&amp;z=vtech&pn=17" target="_blank">肮脏且恐怖！起底德特里克堡生物实验室惊人黑幕</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711886395083165392" mon="col=5&amp;z=vtech&pn=18" target="_blank">用智慧制造牵起两岸的手</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1702143138502406966" mon="col=5&amp;z=vtech&pn=19" target="_blank">“心急买口罩 扫码支付入圈套？”追踪：承诺撤下“悟..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711203019691891227" mon="col=5&amp;z=vtech&pn=20" target="_blank">硬核！儿子开吊车将母亲举高摘枣：只要她高兴，三天不..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711658147986627423" mon="col=5&amp;z=vtech&pn=21" target="_blank">“接链”行动打通汽车产业链堵点</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711774310410500707" mon="col=5&amp;z=vtech&pn=22" target="_blank">2021中关村论坛在北京开幕｜正点财经</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1704141781623797697" mon="col=5&amp;z=vtech&pn=23" target="_blank">没了澳大利亚，中国根本不用担心，赵立坚早已把话挑明</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1707697693188939108" mon="col=5&amp;z=vtech&pn=24" target="_blank">全国首个AI社区食堂亮相上海｜正点财经</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1707163733400202930" mon="col=5&amp;z=vtech&pn=25" target="_blank">疫苗对付不了变异的德尔塔病毒？张文宏：魔高一尺，道..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711244275006669574" mon="col=5&amp;z=vtech&pn=26" target="_blank">谁“偷”走了你的隐私？④：专家支招防范APP恶意收..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711191468041452465" mon="col=5&amp;z=vtech&pn=27" target="_blank">硬核！儿子开吊车将母亲举高摘枣：只要她高兴 三天不..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711298045205223181" mon="col=5&amp;z=vtech&pn=28" target="_blank">假期遛娃好去处！激光雕刻机、野生动物标本，文旅博览..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711202870152716455" mon="col=5&amp;z=vtech&pn=29" target="_blank">「工业强省进行时」昌兴航空：研发新产品 开拓新市场</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1710951046181723626" mon="col=5&amp;z=vtech&pn=30" target="_blank">“滴水是金 节水为津”：用水大户统一监管 建设节水..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1705340422229082380" mon="col=5&amp;z=vtech&pn=31" target="_blank">种水稻不用水 旱作水稻真奇妙</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="BAIDU_AD_639905" class="ecom-ad" style="margin-bottom:30px;text-align:center">
+<script>BAIDU_CLB_fillSlot("639905");</script>
+</div>
+<div class="column clearfix" id="col_shouji" alog-group="log-technnews-shouji">
+<div class="column-title"><div class="column-title-borders"><h2>手机</h2><span class="line"></span></div></div><div class="l-left-col">
+<div class="mod" id="cell_iphone">
+<div class="hd"><h3>iPhone<span class="dec">iPhone</span></h3>
+</div>
+<div class="bd">
+<ul class="ulist mix-ulist ">
+<li><a href="http://baijiahao.baidu.com/s?id=1711670591391614525" mon="col=10&amp;z=iphone&pn=1" target="_blank">苹果手机终于不被人“爱疯”了</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711608305888825450" mon="col=10&amp;z=iphone&pn=2" target="_blank">iPhone 13上手体验，这几个问题可能是你关心..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711655334797811543" mon="col=10&amp;z=iphone&pn=3" target="_blank">iPhone 13刚发布，iPhone 14 Pr..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712001979335150744" mon="col=10&amp;z=iphone&pn=4" target="_blank">与iPhone的十年，邮政的承诺和努力从未改变</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711572276003245392" mon="col=10&amp;z=iphone&pn=5" target="_blank">转转iPhone消费报告：旧机不过时，“高龄”iP..</a></li>
+</ul>
+</div>
+</div>
+<div class="mod" id="cell_news">
+<div class="hd"><h3>Android<span class="dec">Android</span></h3>
+</div>
+<div class="bd">
+<ul class="ulist mix-ulist ">
+<li><a href="http://baijiahao.baidu.com/s?id=1712020464958530284" mon="col=11&amp;z=android&pn=1" target="_blank">本田将搭载汽车系统，谷歌凭什么称为车载系统的巨头？</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711663033624562101" mon="col=11&amp;z=android&pn=2" target="_blank">折叠屏手机生态迎大变，谷歌、苹果或将加入战团</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711651459573958563" mon="col=11&amp;z=android&pn=3" target="_blank">赵明：荣耀市场份额已回升到16.2% 国产手机放大..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711328836664525515" mon="col=11&amp;z=android&pn=4" target="_blank">印度反垄断机构报告：谷歌滥用安卓在印度的主导地位</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="l-middle-col">
+<div class="middle-focus-news">
+<ul class="ulist fb-list">
+<li class="bold-item"><a href="http://baijiahao.baidu.com/s?id=1712023206110729226" mon="col=12&amp;a=2&amp;z=cell&pn=1" target="_blank">苹果承认了！</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712106681943673019" mon="col=12&amp;a=2&amp;z=cell&pn=2" target="_blank">再战女性手机赛道，小米发布第三大品牌</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712055061225578962" mon="col=12&amp;a=2&amp;z=cell&pn=3" target="_blank">微信又有更新！网友：我可太需要了</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712015798555262717" mon="col=12&amp;a=2&amp;z=cell&pn=4" target="_blank">华为不会出售手机业务 再发布开源操作系统</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712106062054134075" mon="col=12&amp;a=2&amp;z=cell&pn=5" target="_blank">乐视手机时隔数年回归，面向网约车司机、外卖小哥等群..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712020352518023414" mon="col=12&amp;a=2&amp;z=cell&pn=6" target="_blank">“13香”到底香不香</a></li>
+</ul>
+<ul class="ulist fb-list">
+<li><a href="http://baijiahao.baidu.com/s?id=1712029418135059546" mon="col=12&amp;a=2&amp;z=cell&pn=7" target="_blank">「高质量发展」广东已初步形成全球最大5G产业集聚区</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712084205320027056" mon="col=12&amp;a=2&amp;z=cell&pn=8" target="_blank">iPhone 13新包装被华强北破解 一套封条只卖..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712105868095814329" mon="col=12&amp;a=2&amp;z=cell&pn=9" target="_blank">早资道丨乐视手机宣布回归；阿里达摩院启动L4级无人..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711954339549064577" mon="col=12&amp;a=2&amp;z=cell&pn=10" target="_blank">明明用同一个WiFi，为什么你的手机网速就是比别人..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712106277279794467" mon="col=12&amp;a=2&amp;z=cell&pn=11" target="_blank">赶紧开启！针对这类人，微信正式推出全新模式！</a></li>
+</ul>
+<ul class="ulist fb-list">
+<li><a href="http://baijiahao.baidu.com/s?id=1712092378261155950" mon="col=12&amp;a=2&amp;z=cell&pn=12" target="_blank">微信上线这个新功能！网友：太好啦</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711946546235688469" mon="col=12&amp;a=2&amp;z=cell&pn=13" target="_blank">作为父母，你知道孩子为什么沉迷手机，不可自拔吗？</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712050521413361223" mon="col=12&amp;a=2&amp;z=cell&pn=14" target="_blank">小米时隔两年再战女性手机市场，新系列Civi259..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712051582241639760" mon="col=12&amp;a=2&amp;z=cell&pn=15" target="_blank">广东移动“手机课堂”助力老年人开启“智慧生活”</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712108371128552381" mon="col=12&amp;a=2&amp;z=cell&pn=16" target="_blank">乐视手机回归：希望市场多给一些时间</a></li>
+</ul>
+</div>
+</div>
+<div class="l-right-col">
+<div class="mod" id="new_cell">
+<div class="hd"><h3>手机新品<span class="dec">NEW MOBILE PHONE</span></h3>
+</div>
+<div class="bd">
+<ul class="ulist mix-ulist ">
+<li><a href="http://baijiahao.baidu.com/s?id=1712017839008750499" mon="col=13&amp;z=cell_xinpin&pn=1" target="_blank">“13香”，到底香不香？苹果被批“挤牙膏”式升级</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712117133931137662" mon="col=13&amp;z=cell_xinpin&pn=2" target="_blank">微信又又又更新了！被群折磨的网友：我可太需要了…</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712118399364802192" mon="col=13&amp;z=cell_xinpin&pn=3" target="_blank">微信又更新啦！正式推出新模式！</a></li>
+</ul>
+</div>
+</div>
+<div class="mod" id="cell_aside_price">
+<div class="hd">
+<h3>手机报价排行<span class="dec">PRICE RANKING</span></h3>
+<div class="price-search" id="cell_price_search">
+<input class="price-search-txt"  type="text" value="产品或型号" onclick="this.value=''" id="cell_txt" />
+<a href='javascript:void(0);' class="price-search-btn" id="cell_btn" target="_blank">查询</a>
+</div>
+</div>
+<div class="bd">
+<div id="mobile-price">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="column clearfix" id="col_shuma" alog-group="log-technnews-shumachanpin">
+<div class="column-title"><div class="column-title-borders"><h2>数码产品</h2><span class="line"></span></div></div><div class="l-left-col">
+<div class="mod" id="sm_pbdn">
+<div class="hd"><h3>平板电脑<span class="dec">PANEL COMPUTER</span></h3>
+</div>
+<div class="bd">
+<ul class="ulist mix-ulist ">
+<li><a href="http://baijiahao.baidu.com/s?id=1710479235190109363" mon="col=15&amp;z=pad&pn=1" target="_blank">平板电脑芯片进入6纳米时代 “双减”背景下上游仍看..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1710423113208144018" mon="col=15&amp;z=pad&pn=2" target="_blank">疫后平板电脑市场爆发，联发科时隔2个月再发迅鲲芯片</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1708974638868531611" mon="col=15&amp;z=pad&pn=3" target="_blank">中国在线教育大整顿，平板电脑市场能否持续增长？</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1708704749031728435" mon="col=15&amp;z=pad&pn=4" target="_blank">车“嗅”之处  精度可达百万分之一</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1707876625743611266" mon="col=15&amp;z=pad&pn=5" target="_blank">分析机构：2021Q2中国平板电脑市场出货量为71..</a></li>
+</ul>
+</div>
+</div>
+<div class="mod" id="sm_ebook">
+<div class="hd"><h3>电子书<span class="dec">E-BOOK</span></h3>
+</div>
+<div class="bd">
+<ul class="ulist mix-ulist ">
+<li><a href="http://baijiahao.baidu.com/s?id=1669698767607326274" mon="col=16&amp;z=ebook&pn=1" target="_blank">马刺发行免费儿童电子书，教给孩子们如何应对新冠肺炎</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1669657444737165215" mon="col=16&amp;z=ebook&pn=2" target="_blank">高速转写，智能方便：这两款办公利器让你的办事效率嗖..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1669092846246762196" mon="col=16&amp;z=ebook&pn=3" target="_blank">PDF文件过大该如何压缩？这3个PDF压缩技巧很好..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1668362836196815783" mon="col=16&amp;z=ebook&pn=4" target="_blank">出版商因开放图书馆电子书租借服务起诉互联网档案馆</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="l-middle-col">
+<div class="middle-focus-news">
+<ul class="ulist fb-list">
+<li class="bold-item"><a href="http://baijiahao.baidu.com/s?id=1648280800066508703" mon="col=17&amp;a=2&amp;z=digital&pn=1" target="_blank">华为P30系列摄影教程：活用手动模式，你也能拍流星..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1668852819855945218" mon="col=17&amp;a=2&amp;z=digital&pn=2" target="_blank">资深玩家快速教学：荣耀30 Pro怎么愉快地拍流光..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1681334104607367233" mon="col=17&amp;a=2&amp;z=digital&pn=3" target="_blank">拍照时，是横幅拍摄还是竖幅拍摄？</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1681342813056791082" mon="col=17&amp;a=2&amp;z=digital&pn=4" target="_blank">浅谈透视构图法</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1677509468228678872" mon="col=17&amp;a=2&amp;z=digital&pn=5" target="_blank">简单5个要点拍出对焦清晰、氛围强烈的舞台照片</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1670977157140352359" mon="col=17&amp;a=2&amp;z=digital&pn=6" target="_blank">正确的销售手机方式，你学会了吗？（一）</a></li>
+</ul>
+<ul class="ulist fb-list">
+<li><a href="http://baijiahao.baidu.com/s?id=1711771950500825591" mon="col=17&amp;a=2&amp;z=digital&pn=7" target="_blank">施工拍照用今日水印相机，施工安全有保障</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711700532931157447" mon="col=17&amp;a=2&amp;z=digital&pn=8" target="_blank">华为携手奇点国际发布机场围界智能告警系统解决方案</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711558334176624477" mon="col=17&amp;a=2&amp;z=digital&pn=9" target="_blank">夜景创作的10个要点</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1681479532597969921" mon="col=17&amp;a=2&amp;z=digital&pn=10" target="_blank">透视构图实操一：拍文档和建筑如何不变形</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711598535026773282" mon="col=17&amp;a=2&amp;z=digital&pn=11" target="_blank">总被忽略的关键：大疆的app让其无人机更好用，其它..</a></li>
+</ul>
+<ul class="ulist fb-list">
+<li><a href="http://baijiahao.baidu.com/s?id=1677432913096889392" mon="col=17&amp;a=2&amp;z=digital&pn=12" target="_blank">如何利用滤镜或相机设置来改变人像照片的色调</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1681664131773924992" mon="col=17&amp;a=2&amp;z=digital&pn=13" target="_blank">浅谈摄影构图中的点、线、面</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1677431992406117717" mon="col=17&amp;a=2&amp;z=digital&pn=14" target="_blank">不同时间、天气下的光线的特点及分别适合拍摄什么样的..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712083936076427701" mon="col=17&amp;a=2&amp;z=digital&pn=15" target="_blank">苹果iPhone 13 Pro DxOMark相机..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1712044181896961094" mon="col=17&amp;a=2&amp;z=digital&pn=16" target="_blank">小米发布全新潮流系列Civi及首款新机，售价259..</a></li>
+</ul>
+</div>
+</div>
+<div class="l-right-col">
+<div class="mod" id="sm_new">
+<div class="hd"><h3>电脑新品<span class="dec">NEW COMPUTER</span></h3>
+</div>
+<div class="bd">
+<ul class="ulist mix-ulist ">
+<li><a href="http://baijiahao.baidu.com/s?id=1711828351000052879" mon="col=18&amp;z=comp_xinpin&pn=1" target="_blank">原子薄磁性半导体诞生！制造晶体管，未来的计算机将可..</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1667266752784273066" mon="col=18&amp;z=comp_xinpin&pn=2" target="_blank">攻心式销售，学会暗示，引导客户自主下单</a></li>
+<li><a href="http://baijiahao.baidu.com/s?id=1711852233116995747" mon="col=18&amp;z=comp_xinpin&pn=3" target="_blank">我最喜欢去的地方</a></li>
+</ul>
+</div>
+</div>
+<div class="mod" id="stock-aside-individua">
+<div class="hd">
+<h3>电脑报价排行<span class="dec">PRICE RANKING</span></h3>
+<div class="price-search" id="pc_price_search">
+<input class="price-search-txt"  type="text"  value="产品或型号" onclick="this.value=''" id="pc_txt"/>
+<a href='javascript:void(0);' class="price-search-btn" id="pc_btn" target="_blank">查询</a>
+</div>
+</div>
+<div class="bd">
+<div id="pc-price">
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul id="goTop" class="mod-sidebar">
+<li class="item roumer button-rotate" data-text="辟谣">
+<a href="http://www.piyao.org.cn/yybgt/index.htm">辟谣</a>
+</li>
+<li class="item report button-rotate" data-text="举报">
+<a href="http://report.12377.cn:13225/toreportinputNormal_anis.do">举报</a>
+</li>
+<li class="item qr-code button-rotate" data-text="二维码">
+<a href="javascript:void(0);">二维码</a>
+</li>
+<li class="qr-code-container clearfix">
+<span class="item-container left">
+<span class="img-container">
+<img src="//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/fisp_static/common/img/sidebar/newErweima_9fa03e0.png"/>
+</span>
+</span>
+<span class="item-container right">
+<p class="title">百度新闻客户端</p>
+<ul>
+<li>扫描二维码下载</li>
+<li>随时随地收看更多新闻</li>
+</ul>
+</span>
+</li>
+<li class="item favorite button-rotate" data-text="收藏本站">
+<a href="javascript:void(0);">收藏本站</a>
+</li>
+<li class="item search button-rotate" data-text="搜索">
+<a href="javascript:void(0);" id="search-btn">搜索</a>
+</li>
+<li class="item feedback button-rotate" id="feedbackbtn" data-text="用户反馈">
+<a href="javascript:void(0);">用户反馈</a>
+</li>
+<li class="item gotop">
+<a id="gotop_btn" href="javascript:void(0);" onclick="window.scroll(0, 0)"></a>
+</li>
+<li class="searchbox">
+<span class="close-btn"></span>
+<p>
+<input type="hidden" name="tn" id="tn" value="news"/>
+<input type="hidden" name="from" id="from" value="news"/>
+<input type="hidden" name="cl" id="cl" value="2"/>
+<input type="hidden" name="rn" id="rn" value="20"/>
+<input type="hidden" name="ct" id="ct" value="1"/>
+<input class="searchInput" type="text" value="输入搜索词" name="word" autocomplete="off" tabindex="1" maxlength="100"/>
+<button class="submit-btn" type="button">搜索</button>
+</p>
+</li>
+<li class="close-tip">收起<i class="arrow"></i></li>
+</ul>
+<style>
+#goTop{
+    position: fixed;
+    width: 54px;
+    left: 50%;
+    margin-left: 502px;
+    bottom: 20px;
+    _position: absolute;
+    _top: expression(eval(document.documentElement.scrollTop || document.body.scrollTop)+eval(document.documentElement.clientHeight || document.body.clientHeight)-361+'px');
+    z-index:998;
+}
+</style>
+
+</div>
+
+<div id="footerwrapper">
+<div class="bottombar" alog-group="log-footer-bottombar" alog-alias="hunter-start-bottombar">
+<div class="bottombar-inner clearfix">
+<div class="bot-left">
+<div class="title-container">
+<i class="icon">&nbsp;</i>
+<h4>更多精彩内容</h4>
+</div>
+<div class="qrcode-container clearfix">
+<div class="img-container">
+<img src="//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/fisp_static/common/img/footer/newErweima_9fa03e0.png">
+</div>
+<div class="link-container">
+<a href="http://downpack.baidu.com/baidunews_AndroidPhone_1014720b.apk" target="_blank">Android版下载</a>
+<a href="https://itunes.apple.com/cn/app/id482820737" target="_blank">iPhone版下载</a>
+</div>
+<p class="info">扫描二维码, 收看更多新闻</p>
+</div>
+</div>
+<div class="bot-right">
+<div class="title-container">
+<i class="icon">&nbsp;</i>
+<h4>百度新闻独家出品</h4>
+</div>
+<ol>
+<li>1. 新闻由机器选取每5分钟自动更新</li>
+<li>2. 百度新闻搜索源于互联网新闻网站和频道，系统自动分类排序</li>
+<li>3. 百度不刊登或转载任何完整的新闻内容</li>
+</ol>
+</div>
+</div>
+</div>
+<div style="font-size:12px;text-align:center;">
+责任编辑：胡彦BN098 刘石娟BN068 谢建BN085 李芳雨BN091 储信艳BN087 焦碧碧BN084 禤聪BN095 王鑫BN060 崔超BN071 违法和不良信息举报电话：400-921-6911</div>
+<div id="footer" alog-group="log-footer" alog-alias="hunter-start-footer">
+<a href="//news-bos.cdn.bcebos.com/mvideo/baidu_news_protocol.html">用户协议</a>
+<a href="https://news-bos.cdn.bcebos.com/mvideo/privacy.html">隐私策略</a>
+<a href="//help.baidu.com/newadd?prod_id=5&category=1">投诉中心</a>
+<span>京公网安备11000002000001号</span>
+<a href="//news-bos.cdn.bcebos.com/mvideo/pcnews_licence.html">互联网新闻信息服务许可</a>
+<span>&copy;2021Baidu</span>
+<a class="cy" href="//www.baidu.com/duty/">使用百度前必读</a>
+<a target="_blank" class="img-link img-link1" href="http://net.china.cn/chinese/index.htm">
+</a>
+<a target="_blank" class="img-link img-link2" href="http://www.cyberpolice.cn/wfjb/">
+</a>
+<a target="_blank" class="img-link img-link3" href="http://www.bjjubao.org/">
+</a>
+</div>
+</div>
+<style>
+
+    #headerwrapper{
+        width:100%;
+    }
+    .olist li{
+        position:relative;
+    }
+    .olist .price{
+        position:absolute;
+        top:5px;
+        right:0;
+        font-size:12px;
+        color:#222;
+    }
+</style>
+<script type="text/javascript">
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe9e114d958ea263de46e080563e254c4' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    alog("set", "alias", {
+        monkey: "https://img.baidu.com/hunter/alog/monkey.min.js",
+        element: "https://img.baidu.com/hunter/alog/element.min.js"
+    });
+
+    alog("require", ["monkey", "element"], function(monkey, element){
+        monkey.create({
+            page: "news-tech",
+            pid: "241",
+            p: "133",
+            hid: "424",
+            postUrl: window.HUNTERLOGURL,
+            reports: {
+                refer: 1,
+                staytime: 1
+            }
+        });
+    });
+
+    alog("monkey.send", "pageview", { now: +new Date });
+
+</script>
+</body><script type="text/javascript" src="//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/fisp_static/common/lib/mod_b818356.js"></script>
+<script type="text/javascript">require.resourceMap({"res":{"common:widget/lib/tangram/base/base.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/lib/tangram/base/base_c518988.js","pkg":"common:p0"},"common:widget/lib/magic/magic.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/lib/magic/magic_56edf31.js","pkg":"common:p0"},"common:widget/lib/magic/Base/Base.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/lib/magic/Base/Base_50a505e.js","pkg":"common:p0","deps":["common:widget/lib/tangram/base/base.js","common:widget/lib/magic/magic.js"]},"common:widget/lib/magic/control/control.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/lib/magic/control/control_5c7cfca.js","pkg":"common:p0","deps":["common:widget/lib/tangram/base/base.js","common:widget/lib/magic/magic.js"]},"common:widget/lib/magic/control/Layer/Layer.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/lib/magic/control/Layer/Layer_ccd8d01.js","pkg":"common:p0","deps":["common:widget/lib/tangram/base/base.js","common:widget/lib/magic/magic.js","common:widget/lib/magic/Base/Base.js","common:widget/lib/magic/control/control.js"]},"common:widget/lib/magic/Mask/Mask.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/lib/magic/Mask/Mask_d1105f9.js","pkg":"common:p0","deps":["common:widget/lib/tangram/base/base.js","common:widget/lib/magic/magic.js","common:widget/lib/magic/control/Layer/Layer.js"]},"common:widget/lib/magic/setup/setup.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/lib/magic/setup/setup_8207eff.js","pkg":"common:p0","deps":["common:widget/lib/tangram/base/base.js","common:widget/lib/magic/magic.js"]},"common:widget/lib/magic/_query/_query.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/lib/magic/_query/_query_a974d80.js","pkg":"common:p0","deps":["common:widget/lib/tangram/base/base.js","common:widget/lib/magic/magic.js"]},"common:widget/lib/magic/control/Tab/Tab.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/lib/magic/control/Tab/Tab_6e3b376.js","pkg":"common:p0","deps":["common:widget/lib/tangram/base/base.js","common:widget/lib/magic/magic.js","common:widget/lib/magic/Base/Base.js","common:widget/lib/magic/control/control.js","common:widget/lib/magic/_query/_query.js"]},"common:widget/lib/magic/setup/tab/tab.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/lib/magic/setup/tab/tab_7ca296e.js","pkg":"common:p0","deps":["common:widget/lib/tangram/base/base.js","common:widget/lib/magic/magic.js","common:widget/lib/magic/setup/setup.js","common:widget/lib/magic/control/Tab/Tab.js"]},"common:widget/lib/magic/control/Dialog/Dialog.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/lib/magic/control/Dialog/Dialog_c2b9c1a.js","pkg":"common:p0","deps":["common:widget/lib/tangram/base/base.js","common:widget/lib/magic/magic.js","common:widget/lib/magic/control/Layer/Layer.js"]},"common:widget/lib/magic/Background/Background.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/lib/magic/Background/Background_353ebd3.js","pkg":"common:p0","deps":["common:widget/lib/tangram/base/base.js","common:widget/lib/magic/magic.js","common:widget/lib/magic/Base/Base.js"]},"common:widget/lib/magic/Dialog/Dialog.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/lib/magic/Dialog/Dialog_239df5f.js","pkg":"common:p0","deps":["common:widget/lib/tangram/base/base.js","common:widget/lib/magic/magic.js","common:widget/lib/magic/control/Dialog/Dialog.js","common:widget/lib/magic/Background/Background.js"]},"common:widget/lib/magic/control/Dialog/$mask/$mask.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/lib/magic/control/Dialog/$mask/$mask_50466b3.js","pkg":"common:p0","deps":["common:widget/lib/tangram/base/base.js","common:widget/lib/magic/magic.js","common:widget/lib/magic/control/Dialog/Dialog.js","common:widget/lib/magic/Mask/Mask.js"]},"common:widget/ui/jquery/jquery.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/jquery/jquery_5d7279d.js","pkg":"common:p1"},"common:widget/ui/jquery/jquery.cookie.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/jquery/jquery.cookie_e1f1479.js","pkg":"common:p1"},"common:widget/banner_ad/banner_ad.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/banner_ad/banner_ad_5c31727.js","pkg":"common:p1","deps":["common:widget/ui/jquery/jquery.js","common:widget/ui/jquery/jquery.cookie.js"]},"common:widget/banner_ad/banner_ad_data.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/banner_ad/banner_ad_data_aff68ed.js","pkg":"common:p1"},"common:widget/dep/jQuery/plugins/jquery.lavalamp.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/dep/jQuery/plugins/jquery.lavalamp_5a9954b.js","pkg":"common:p1"},"common:widget/favorite/favorite.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/favorite/favorite_bfc0622.js","pkg":"common:p1","deps":["common:widget/ui/jquery/jquery.js","common:widget/ui/jquery/jquery.cookie.js"]},"common:widget/feedback/feedback.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/feedback/feedback_6e10548.js","pkg":"common:p1","deps":["common:widget/ui/jquery/jquery.js","common:widget/ui/jquery/jquery.cookie.js"]},"common:widget/fixedpannel/fixedpannel.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/fixedpannel/fixedpannel_bf4dc4c.js","pkg":"common:p1","deps":["common:widget/lib/tangram/base/base.js","common:widget/lib/magic/magic.js","common:widget/lib/magic/control/Layer/Layer.js","common:widget/lib/magic/Mask/Mask.js","common:widget/lib/magic/setup/tab/tab.js","common:widget/lib/magic/Dialog/Dialog.js"]},"common:widget/footer/statistics.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/footer/statistics_83e2581.js","pkg":"common:p1","deps":["common:widget/ui/jquery/jquery.js"]},"common:widget/header/header.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/header/header_c2a1ecd.js","pkg":"common:p1","deps":["common:widget/ui/jquery/jquery.js"]},"common:widget/hunter/hunter.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/hunter/hunter_2113114.js","pkg":"common:p1"},"common:widget/navbar/navbar.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/navbar/navbar_3ad387b.js","pkg":"common:p1","deps":["common:widget/dep/jQuery/plugins/jquery.lavalamp.js","common:widget/ui/jquery/jquery.js"]},"common:widget/searchbox/searchbox.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/searchbox/searchbox_21149bc.js","pkg":"common:p1","deps":["common:widget/lib/tangram/base/base.js"]},"common:widget/searchbox/searchboxActive.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/searchbox/searchboxActive_f139a7f.js","pkg":"common:p1","deps":["common:widget/ui/jquery/jquery.js"]},"common:widget/searchbox/searchradio.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/searchbox/searchradio_e67ae37.js","pkg":"common:p1","deps":["common:widget/ui/jquery/jquery.js"]},"common:widget/second_navbar/fold.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/second_navbar/fold_b1dea17.js","pkg":"common:p1","deps":["common:widget/ui/jquery/jquery.js"]},"common:widget/show_top_qrcode/show_top_qrcode.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/show_top_qrcode/show_top_qrcode_db04dfa.js","pkg":"common:p1","deps":["common:widget/ui/jquery/jquery.js"]},"common:widget/sidebar/sidebar.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/sidebar/sidebar_8df2d84.js","pkg":"common:p1","deps":["common:widget/ui/jquery/jquery.js","common:widget/feedback/feedback.js"]},"common:widget/ui/jquery/jquery-ui.min.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/jquery/jquery-ui.min_793696a.js","pkg":"common:p1"},"common:widget/ui/jquery/jquery.animateEvents.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/jquery/jquery.animateEvents_fa2738c.js","pkg":"common:p1"},"common:widget/ui/vs/vs.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/vs/vs_ac8f6e6.js","pkg":"common:p1","deps":["common:widget/lib/tangram/base/base.js"]},"common:widget/ui/vs/observer/observer.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/vs/observer/observer_7031f75.js","pkg":"common:p1"},"common:widget/ui/vs/ContentPlayer/ContentPlayer.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/vs/ContentPlayer/ContentPlayer_cfa437e.js","pkg":"common:p1","deps":["common:widget/lib/tangram/base/base.js","common:widget/ui/vs/vs.js","common:widget/ui/vs/observer/observer.js"]},"common:widget/ui/vs/DynamicList/DynamicList.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/vs/DynamicList/DynamicList_757360e.js","pkg":"common:p1","deps":["common:widget/lib/tangram/base/base.js","common:widget/ui/vs/vs.js","common:widget/ui/vs/observer/observer.js"]},"common:widget/ui/vs/ScrollView/ScrollView.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/vs/ScrollView/ScrollView_e529192.js","pkg":"common:p1","deps":["common:widget/lib/tangram/base/base.js","common:widget/ui/vs/vs.js"]},"common:widget/ui/vs/Slide/Slide.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/vs/Slide/Slide_bcb1535.js","pkg":"common:p1","deps":["common:widget/ui/jquery/jquery.js"]},"common:widget/ui/vs/citylist/citylist.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/vs/citylist/citylist_39082c3.js","pkg":"common:p1"},"common:widget/ui/vs/clickMonitor/clickMonitor.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/vs/clickMonitor/clickMonitor_3b94ea0.js","pkg":"common:p1","deps":["common:widget/lib/tangram/base/base.js"]},"common:widget/ui/vs/delayload/delayload.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/vs/delayload/delayload_360bc2c.js","pkg":"common:p1","deps":["common:widget/lib/tangram/base/base.js"]},"common:widget/ui/vs/enterState/enterState.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/vs/enterState/enterState_4f3114b.js","pkg":"common:p1","deps":["common:widget/lib/tangram/base/base.js"]},"common:widget/ui/vs/imgLazyLoad/ImglazyLoad.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/vs/imgLazyLoad/ImglazyLoad_f2b8599.js","pkg":"common:p1"},"common:widget/ui/vs/slider/slider.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/vs/slider/slider_32bdf45.js","pkg":"common:p1","deps":["common:widget/lib/tangram/base/base.js"]},"common:widget/ui/vs/suggestion/suggestion.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/vs/suggestion/suggestion_f2b3c80.js","pkg":"common:p1","deps":["common:widget/lib/tangram/base/base.js"]},"common:widget/ui/vs/utils/utils.js":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/common/widget/ui/vs/utils/utils_73e2453.js","pkg":"common:p1"}},"pkg":{"common:p0":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/fisp_static/common/framework_static_include/framework_static_include_aa59e0d.js"},"common:p1":{"url":"//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/fisp_static/common/module_static_include/module_static_include_5309ae3.js"}}});</script><script type="text/javascript" src="//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/fisp_static/common/module_static_include/module_static_include_5309ae3.js"></script>
+<script type="text/javascript" src="//gss0.bdstatic.com/5foIcy0a2gI2n2jgoY3K/static/fisp_static/common/framework_static_include/framework_static_include_aa59e0d.js"></script>
+<script type="text/javascript">!function(){    	void function(a,b,c,d,e,f,g){a.alogObjectName=e,a[e]=a[e]||function(){(a[e].q=a[e].q||[]).push(arguments)},a[e].l=a[e].l||+new Date,d="https:"===a.location.protocol?"https://fex.bdstatic.com"+d:"http://fex.bdstatic.com"+d;var h=!0;if(a.alogObjectConfig&&a.alogObjectConfig.sample){var i=Math.random();a.alogObjectConfig.rand=i,i>a.alogObjectConfig.sample&&(h=!1)}h&&(f=b.createElement(c),f.async=!0,f.src=d+"?v="+~(new Date/864e5)+~(new Date/864e5),g=b.getElementsByTagName(c)[0],g.parentNode.insertBefore(f,g))}(window,document,"script","/hunter/alog/alog.min.js","alog"),void function(){function a(){}window.PDC={mark:function(a,b){alog("speed.set",a,b||+new Date),alog.fire&&alog.fire("mark")},init:function(a){alog("speed.set","options",a)},view_start:a,tti:a,page_ready:a}}();
+      void function(n){var o=!1;n.onerror=function(n,e,t,c){var i=!0;return!e&&/^script error/i.test(n)&&(o?i=!1:o=!0),i&&alog("exception.send","exception",{msg:n,js:e,ln:t,col:c}),!1},alog("exception.on","catch",function(n){alog("exception.send","exception",{msg:n.msg,js:n.path,ln:n.ln,method:n.method,flag:"catch"})})}(window);
+	}();
+!function(){		alog('speed.set', 'ht', +new Date);
+	}();
+!function(){var widgetList = ['Industry','Science','LatestNews'];
+var remainWigetList = $.extend(true, [], widgetList);
+var widgetStatus = (function () {
+var list = {};
+for (var i in widgetList) {
+list[widgetList[i]] = false;
+}
+return list;
+})();
+var widgetReferenceList = [];
+// 保证栏目按widgetList的顺序append到#body上
+var appendWidget = function (widgetName, widgetDom) {
+var previousWidgetRef = null;
+widgetReferenceList[widgetName] = $(widgetDom);
+for (var i = 0; i < widgetList.length; i++) {
+previousWidgetName = widgetList[i]
+if (previousWidgetName === widgetName) {
+break;
+}
+if (widgetReferenceList[previousWidgetName]) {
+previousWidgetRef = widgetReferenceList[previousWidgetName];
+}
+}
+if (!previousWidgetRef) {
+nextWidgetRef = null;
+for (var i = widgetList.length - 1; i >= 0; i--) {
+nextWidgetName = widgetList[i]
+if (nextWidgetName === widgetName) {
+break;
+}
+if (widgetReferenceList[nextWidgetName]) {
+nextWidgetRef = widgetReferenceList[nextWidgetName];
+}
+}
+if (!nextWidgetRef) {
+if (widgetName == 'Industry') {
+$('#BAIDU_AD_639905').before(widgetReferenceList[widgetName]);
+}
+if (widgetName == 'Phone') {
+$('#BAIDU_AD_639905').after(widgetReferenceList[widgetName]);
+}
+if (widgetName == 'Digital' || widgetName == 'Science' || widgetName == 'LatestNews') {
+$('#body').append(widgetReferenceList[widgetName]);
+}
+} else {
+if (widgetName == 'Industry') {
+$('#BAIDU_AD_639905').before(widgetReferenceList[widgetName]);
+}
+if (widgetName == 'Phone') {
+$('#BAIDU_AD_639905').after(widgetReferenceList[widgetName]);
+}
+if (widgetName == 'Digital' || widgetName == 'Science' || widgetName == 'LatestNews') {
+$('#body').append(widgetReferenceList[widgetName]);
+}
+}
+} else {
+if (widgetName == 'Industry') {
+$('#BAIDU_AD_639905').before(widgetReferenceList[widgetName]);
+}
+if (widgetName == 'Phone') {
+$('#BAIDU_AD_639905').after(widgetReferenceList[widgetName]);
+}
+if (widgetName == 'Digital' || widgetName == 'Science' || widgetName == 'LatestNews') {
+$('#body').append(widgetReferenceList[widgetName]);
+}
+}
+}
+
+var renderWidget = function (widgetName) {
+$.ajax({
+url: '/widget',
+type: 'GET',
+dataType: 'html',
+data: {
+id: widgetName,
+channel: 'tech',
+/*ajax: 'json',*/
+// 时间戳，防止ie6缓存ajax请求导致第二次不请求数据
+t: new Date().getTime()
+},
+timeout: 5000
+}).done(function (data) {
+appendWidget(widgetName, data);
+require.async(['common:widget/lib/tangram/base/base.js', 'common:widget/ui/vs/delayload/delayload.js'],function(baidu,delayload){
+baidu.dom.ready(function(){
+//图片延迟加载
+var delay=new delayload();
+
+delay.init();
+delay.delayLoader(1);
+delay.bindUI();
+});
+});
+});
+}
+var getLoadingWidgetName = function () {
+return remainWigetList.shift();
+}
+var isChrome = navigator.userAgent.indexOf("Chrome") > -1;
+var isSafari = navigator.userAgent.indexOf("Safari") > -1;
+window.onscroll = function () {
+var body = $('body');
+var height = body.height();
+var scrollTop = 0;
+if (isChrome || isSafari) {
+scrollTop = $('body').scrollTop();
+} else {
+scrollTop = document.documentElement.scrollTop;
+}
+if (scrollTop > 1) {
+widgetName = getLoadingWidgetName();
+
+if (widgetStatus[widgetName] === false) {
+widgetStatus[widgetName] = true;
+renderWidget(widgetName);
+}
+}
+}
+}();
+!function(){		$(function () {
+			$.ajax({
+				url: '/passport',
+				type: 'GET',
+				dataType: 'json',
+				timeout: 5000
+			}).done(function (data) {
+				var userName = '';
+				var isLogin = false;
+				if(data.errno ===0 && data.data && data.data.displayname) {
+					isLogin = true;
+					userName = data.data.displayname;
+				}
+				window['isLogin'] = isLogin;
+				require.async("common:widget/ui/vs/enterState/enterState.js", function (enterState) {
+					enterState(userName, "")
+				});
+			});
+		})
+	}();
+!function(){	window.onbeforeunload = function(e){
+		window.scrollTo(0,0);
+	}
+	}();
+!function(){    require.async(['common:widget/header/header.js'],
+        function (mod) {
+            mod.init();
+        }
+    );
+}();
+!function(){	require.async('common:widget/show_top_qrcode/show_top_qrcode.js', function(showqrcode) {
+		showqrcode.init();
+	});
+}();
+!function(){    require.async(["common:widget/lib/tangram/base/base.js", "common:widget/searchbox/searchbox.js", "common:widget/ui/vs/suggestion/suggestion.js"], function(baidu,searchbox,suggestion){
+        baidu.dom.ready(function(){
+            searchbox.searchbox();
+            searchbox.searchnews();
+            if (navigator.cookieEnabled && !/sug?=0/.test(document.cookie)){
+                    suggestion();
+            }
+        });
+    });
+}();
+!function(){    require.async(['common:widget/searchbox/searchradio.js', 'common:widget/searchbox/searchboxActive.js'], function(searchRadio, searchboxActive) {
+        searchRadio();
+        searchboxActive();
+    });
+}();
+!function(){require.async(['common:widget/navbar/navbar.js'],
+function (mod) {
+mod.init();
+}
+);
+}();
+!function(){		require.async(['common:widget/ui/vs/clickMonitor/clickMonitor.js', 'common:widget/lib/tangram/base/base.js'], function(clickMonitor, baidu){
+            if(window.on === undefined) window.on = baidu.on;
+            clickMonitor.init('ONE_LEVEL_HOT', 'c=tech&cy=0');
+        });
+		var extraInfo = {
+			m: 11,
+			c: 'top'
+		};
+		require.async('common:widget/ui/vs/clickMonitor/clickMonitor.js', function(clickMonitor){
+		    clickMonitor.init('TOP');
+		});
+	    require.async(['common:widget/lib/tangram/base/base.js', 'common:widget/ui/vs/delayload/delayload.js'],function(baidu,delayload){
+	      baidu.dom.ready(function(){
+	        //图片延迟加载
+	        var delay=new delayload();
+
+	        delay.init();
+	        delay.delayLoader(1);
+	        delay.bindUI();
+	      });
+	    });
+
+		var PAGE_DATA = {
+		    "guess_list_num": 0,
+		    "guess_jsonp_status" : true
+		};
+  	}();
+!function(){    require.async(['common:widget/lib/tangram/base/base.js', 'common:widget/ui/vs/ContentPlayer/ContentPlayer.js'], function(T, I) {
+    var G = T.dom.g;
+    var on = T.event.on;
+    var imgList = [];
+    var cpOptions_1 = {
+    getBtns: function(){
+    var a, btns;
+    btns = G('imgNav').getElementsByTagName('a');
+    a = [];
+    for(var i=btns.length - 1; i>=0; i--){
+    a.push(btns[i]);
+    }
+    return a;
+    },
+    mainViewContainer: G('imgView'),
+    prevBtn: G('imgplayer-prev'),
+    nextBtn: G('imgplayer-next'),
+    changeAction: 'mouseover',
+    subViewContainer: G('imgTitle'),
+    style: {on: 'active', off: ''},
+    mainViewTpl: '<a href="#{url}" target="_blank" mon="col=carousel&pos=img&pn=#{index}"><img src="#{imgUrl}"></a>',
+    subViewTpl: '<a href="#{url}" target="_blank" mon="col=carousel&pos=title&a=9&ct=1&pn=#{index}"><strong>#{title}</strong>#{abs}</a>',
+    curIndex: 0,
+    data: [],
+    interval: 5000
+    };
+
+    
+                cpOptions_1.data.push({
+    "index": 1,
+    "title": "TikTok 全球月活破 10 亿；Facebook 投 5000 万美元建元宇宙；《迪迦奥特曼》重新上架 B 站",
+    "url": "http:\/\/www.geekpark.net\/news\/286849",
+    "imgUrl": "https:\/\/b.bdstatic.com\/boxlib\/20210928\/202109281720428538519078.jpeg",
+    "abs": ""
+    });
+    imgList.push({"url":"http:\/\/www.geekpark.net\/news\/286849"});
+                    cpOptions_1.data.push({
+    "index": 2,
+    "title": "小米真无线降噪耳机 3 Pro 上手：千元之下的「空间音频」体验几何？",
+    "url": "http:\/\/www.geekpark.net\/news\/286756",
+    "imgUrl": "https:\/\/b.bdstatic.com\/boxlib\/20210928\/202109281720438200295874.jpeg",
+    "abs": ""
+    });
+    imgList.push({"url":"http:\/\/www.geekpark.net\/news\/286756"});
+                    cpOptions_1.data.push({
+    "index": 3,
+    "title": "小米 Civi 体验：更轻、更薄、更好看，这还是小米手机吗？",
+    "url": "http:\/\/www.geekpark.net\/news\/286485",
+    "imgUrl": "https:\/\/b.bdstatic.com\/boxlib\/20210928\/2021092817204489653160050.png",
+    "abs": ""
+    });
+    imgList.push({"url":"http:\/\/www.geekpark.net\/news\/286485"});
+        
+    var index = 0 ;
+    var url = location.href.substr(location.href.indexOf("?")+1).split("&");
+    var key ;
+    for(var i = 0 ; i < url.length ; i++){
+    var tmp = url[i].split("=");
+    if(tmp&&tmp.length>0&&tmp[0]=="lb"){
+    key = tmp[1];
+    }
+    }
+    for(var p in imgList){
+    if(imgList[p].url == key){
+    index = p ;
+    }
+    }
+    cpOptions_1.curIndex = index;
+    var cp_1 = new I.Model(cpOptions_1);
+
+    on(window, 'load', function(){
+    cp_1.play(index+1);
+    });
+
+    var controlers = baidu.dom.query('#imgNav a');
+    baidu.each(controlers,function(item,i){
+    baidu.on(item,'mouseover',function(e){
+    UserMonitor.send(e, 6, {c : "tech", col: "carousel", ct: "1", m: "11", pn: 8-i, pos : "dots", ac : "mouseover"});
+    window.alog && alog("monkey.fire", "record", {
+    type: "click",
+    target: item
+    });
+    });
+    });
+    });
+    }();
+!function(){require.async(['common:widget/sidebar/sidebar.js'],
+    function (Sidebar) {
+        $(function () {
+            var sidebar = new Sidebar();
+            sidebar.init();
+        });
+    }
+);
+}();
+!function(){    require.async(['common:widget/footer/statistics.js'], function (mod) {
+        // 页面加载后，向biglog发送一个pv统计，传入hostname区分产品和频道
+        mod.postReferToBiglog();
+        // 页面加载后，初始化发送往百度统计的打点
+        mod.initClickPostToTongji();
+        // 页面加载后，向百度统计发送页面的refer
+        mod.postReferToTongji();
+    });
+}();
+!function(){    require.async('common:widget/lib/tangram/base/base.js', function(baidu) {
+        var h_tpl = '<li> <span class="listnum highlight">0#{index}</span><a href="#{link}" target="_blank" title="#{name}" mon="col=#{index}&amp;z=renwugongsi&amp;pn=1">#{name}</a><span class="price">#{price}</span></li>',
+                tpl = '<li> <span class="listnum">0#{index}</span><a href="#{link}" target="_blank" title="#{name}" mon="col=#{index}&amp;z=renwugongsi&amp;pn=1">#{name}</a><span class="price">#{price}</span></li>';
+        window.callback = function(oder,opts){
+            var wrapper = oder == 1 ? document.getElementById('mobile-price') : document.getElementById('pc-price'),
+                    temp = [],
+                    html = '<ul class="olist">';
+            for(var i in opts){
+                if(i < 7){
+                    opts[i]['index'] = i;
+                    opts[i]['name'] = baidu.string.subByte(opts[i]['name'], 28);
+                    temp.push(i > 3 ? baidu.string.format(tpl, opts[i]) : baidu.string.format(h_tpl, opts[i]));
+                }
+            }
+            wrapper.innerHTML = html + temp.join('') + '</ul>';
+        }
+        baidu.sio.callByServer('//detail.zol.com.cn/corp_CorpBaidu_subcateId=57^showNum=8^type=top.html');
+        baidu.sio.callByServer('//detail.zol.com.cn/corp_CorpBaidu_subcateId=16%5EshowNum=8%5Etype=top.html');
+        var btns = baidu.dom.query('.price-search-btn'),
+                jk1="//detail.zol.com.cn/index.php?c=HighSearch&subcateId=57&isCorp=1&keyword=",
+                jk2="//detail.zol.com.cn/index.php?c=HighSearch&subcateId=16&isCorp=1&keyword=";
+        baidu.each(btns, function(item){
+            baidu.on(item, 'click' , function(){
+                if(/cell/.test(this.id)){
+                    this.href = jk1 + baidu.g('cell_txt').value;
+                }else{
+                    this.href = jk2 + baidu.g('pc_txt').value;
+                }
+
+            });
+        })
+    });
+
+}();
+!function(){    document.write("<img src='/nocache/mp/b.jpg?cmd=1&class=technnews&cy=0&"+Math.random()+"' style='display:none;'>");
+}();
+!function(){    require.async('common:widget/lib/tangram/base/base.js', function(baidu) {
+        baidu.each(baidu.dom.query('img'),function(item){
+            if(/eiv.baidu.com\/hmt\/icon/.test(baidu.dom.getAttr(item, 'src'))){
+                item.style.display = 'none';
+            }
+        });
+    });
+}();</script></html>

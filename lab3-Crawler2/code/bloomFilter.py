@@ -16,6 +16,9 @@ class BloomFilter:
         self.bits = Bitarray(size)
     
     def add(self,str):
+        if self.find(str):  #已经存在了，不要再往里加
+            return
+        
         for i in range(self.k):
             setbit = BKDRHash_withseed(str,self.hashseeds[i]) % self.size
             #print(i,setbit)

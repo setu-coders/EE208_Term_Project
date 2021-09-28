@@ -27,13 +27,13 @@ def write_outputs(urls, filename):
 
 
 def main():
-    url = "https://www.baidu.com"
-    content = urllib.request.urlopen(url).read()
-    print(str(content))
-    """
+    url = "http://www.baidu.com"
+    content = urllib.request.urlopen(url).read().decode('utf-8')
+    print(content)
+    
     urlSet = parseURL(content)
     write_outputs(urlSet, "res1.txt")
-    """
+    
 
 if __name__ == '__main__':
     main()
