@@ -16,12 +16,12 @@ from bs4 import BeautifulSoup
 from bloomFilter import BloomFilter  # 自己实现的BloomFilter类
 
 import argparse
-
+"""
 parser = argparse.ArgumentParser()
 parser.add_argument("-thread")
 parser.add_argument("-page")
 args = parser.parse_args()
-
+"""
 
  
 TIMEOUTSECONDS = 5  #访问超时时间
