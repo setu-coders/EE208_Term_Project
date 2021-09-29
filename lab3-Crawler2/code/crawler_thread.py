@@ -1,31 +1,31 @@
 # SJTU EE208
 # -*-coding:utf-8-*-
 import os
+import math
 import re
 import string
 import sys
 import urllib
-#import urllib.error
+import urllib.error
 import urllib.parse
 import urllib.request
+from urllib.request import Request, urlopen
 import hashlib
 import threading
 import queue
 import time
 from bs4 import BeautifulSoup
+import argparse
 from bloomFilter import BloomFilter  # 自己实现的BloomFilter类
 
-import argparse
-"""
-parser = argparse.ArgumentParser()
-parser.add_argument("-thread")
-parser.add_argument("-page")
-args = parser.parse_args()
-"""
 
- 
-TIMEOUTSECONDS = 5  #访问超时时间
+TIMEOUTSECONDS = 3 #访问超时时间
 MAXFILENAMELENGTH = 50  #文件名最长不超过的长度
+successful = 0
+failed = 0
+
+header = {'User-Agent': 'user-agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.106 Safari/537.36 Edg/80.0.361.54'}
+
 def valid_filename(s):
     valid_chars = "-_(). %s%s" % (string.ascii_letters, string.digits)  
     s = ''.join((c if c != '.' else '+') for c in s if c in valid_chars)    # 去掉文件名.
@@ -33,12 +33,16 @@ def valid_filename(s):
 
 
 def get_page(page,coding = 'utf-8'):
-    
+    global successful
+    global failed
     try:
-        content = urllib.request.urlopen(page,timeout=TIMEOUTSECONDS).read()
+        request = Request(page, headers=header)
+        content = urlopen(request,timeout = TIMEOUTSECONDS).read()
     except:
+        failed += 1
         raise ValueError
     else:
+        successful += 1
         return content.decode(coding)
 
 
@@ -58,6 +62,8 @@ def get_all_links(content, page):  # html content, page url
 
     return links
 
+def getOptimal_k(m,n):
+    return max(1,math.ceil(math.log(2) * m / n))
 
 def add_page_to_folder(page, content):  
     index_filename = 'index.txt'  
@@ -80,7 +86,6 @@ def crawl():
     while True:
         
         page = q.get(block = True,timeout = TIMEOUTSECONDS)
-       
         if not crawled.find(page):
             #print("current page:",page)
             try:
@@ -105,30 +110,39 @@ def crawl():
                 crawled.add(page)
                 varLock.release()
         print("Tasks left:",q.qsize())
+        
         q.task_done()
         
     
-            
-
+def get_optimal_k(m,n):      # m: bitset length   n:  total number of words(urls)
+    return max(1,math.ceil(math.log(2) * m / n))          
 
 
 if __name__ == '__main__':
 
-    seed = str(sys.argv[1])
+   # seed = str(sys.argv[1])
     #method = sys.argv[2]
     #max_page = int(sys.argv[3])
 
-    start_time = time.time()    # 计时器
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s")
+    parser.add_argument("-thread")
+    parser.add_argument("-page")
+    args = parser.parse_args()
 
-    THREAD_NUM = 8       # 线程数
+    seed = args.s                   #起始网页url
+    THREAD_NUM = int(args.thread)   # 线程数
+    MAXCOUNT = int(args.page)       #目标网页数
+    
+    start_time = time.time()        # 计时器
+
+         
     
     varLock = threading.Lock()
     q = queue.Queue()
 
-    
-
-    
-    crawled = BloomFilter(10000,5)
+    bitset_len = 20 * MAXCOUNT
+    crawled = BloomFilter(bitset_len, get_optimal_k(bitset_len,MAXCOUNT))
     graph = {}
 
     q.put(seed)
@@ -144,3 +158,4 @@ if __name__ == '__main__':
     
     end_time = time.time()
     print(f"total time used:{(end_time - start_time)}")
+    print(f"successful: {successful}, failed: {failed}")
