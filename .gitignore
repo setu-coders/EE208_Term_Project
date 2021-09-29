@@ -7,6 +7,11 @@
 #PDFs
 *.pdf
 
+#htmls
+*.html
+*.htm
+html/
+
 #MacOS stuff
 .DS_Store
 
