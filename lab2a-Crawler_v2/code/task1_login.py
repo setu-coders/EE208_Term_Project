@@ -44,7 +44,7 @@ contents = myinfo.contents
 #print(contents[3].find("input").get("value",""))
 #print(contents[5].find("input").get("value",""))
 needed_info = [
-        contents[i].find("input").get("value","") for i in range(3,9+1,2)
+        contents[i].find("input").get("value","") for i in [3,5,7,9]
 ]
 needed_info.append(contents[11].find("textarea").string)
 #print(needed_info)
