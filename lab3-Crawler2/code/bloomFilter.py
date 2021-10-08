@@ -16,7 +16,7 @@ class BloomFilter:
         self.size = size
         self.k = k
         self.hashseeds = genBKDRhashseeds(k)
-        print("BKDRseeds:",self.hashseeds)
+        #print("BKDRseeds:",self.hashseeds)
         self.bits = Bitarray(size)
 
     def add(self,str):

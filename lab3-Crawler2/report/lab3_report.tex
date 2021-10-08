@@ -67,7 +67,7 @@ showstringspaces=false
 \section{实验概览}
 \begin{enumerate}
 	\item 利用一些hash算法实现BloomFilter数据结构
-	\item 使用多线程加速Lab2中对网页的爬取，并用(1)中的BloomFilter加速url查找判重。
+	\item 使用多线程加速Lab2中对网页的爬取，并用(1)中的BloomFilter加速URL查找判重。
 \end{enumerate}
 \section{实验环境}
 \begin{itemize}
@@ -109,7 +109,7 @@ def add(self,str):
         return True 
 \end{python}
 \subsubsection{BloomFilter测试}
-首先从字符串集中随机选取testSize个字符串作为测试集；接着创建BloomFilter和作为对照组的set（python标准库）。其中，BloomFilter的参数为bitArray大小和k（哈希函数数量），最优的k用$k_{optimal} = \lceil \ln{2} \frac{m}{n} \rceil$计算得出。
+首先从字符串集中随机选取testSize个字符串作为测试集；接着创建BloomFilter和作为对照组的set（python标准库）。其中，BloomFilter的参数为bitArray大小和k（哈希函数数量），最优的k用$k_{optimal} = \lceil \ln{2} \frac{m}{n} \rceil$计算得出。\\
 将每个字符串分别加入BloomFilter和set，如果加入时BloomFilter认为字符串已经存在，但是在set中不存在，则说明BloomFilter出现了错误（FalsePositive）。
 统计得到的FalsePositive总数量占测试集大小即为错误率（FalsePositiveRate）。
 \subsection{问题2-多线程爬虫}
@@ -137,29 +137,54 @@ Add seed URL  to q
 Create some daemon threads to crawl
 Wait for all task to be done
 \end{lstlisting}
+
+\newpage
 \section{代码运行结果}
 \subsection{问题1（BloomFilter）结果}
-完整结果见txt文件
+m = bitArray长度，n = 测试集大小，k = 哈希函数数量
+\subsubsection{m = 5n,k最优}
 \begin{figure}[H]
-%	\includegraphics[scale=0.7]{res1.png}
-	 \caption{res1.txt}
+	\includegraphics[scale=0.6]{fpr_l.png}
+	\centering
+	 \caption{FalsePositiveRate- m = 5n}
+\end{figure}
+\subsubsection{m = 20n,k最优}
+\begin{figure}[H]
+	\includegraphics[scale=0.6]{fpr.png}
+	\centering
+	 \caption{FalsePositiveRate- m = 20n}
 \end{figure}
 
+\subsubsection{m = 100n,k最优}
+\begin{figure}[H]
+	\includegraphics[scale=0.6]{fpr_h.png}
+	\centering
+	 \caption{FalsePositiveRate- m = 100n}
+\end{figure}
+
+可以看到，在k最优的情况下，bitArray长度相比于测试集大小越大，准确率越高（fpr越低），但是牺牲了运行效率。
 \subsection{问题2（多线程爬虫）结果}
 \begin{figure}[H]
-%	\includegraphics[scale=0.7]{res2.png}
-	 \caption{res2.txt}
+	\includegraphics[scale=0.7]{mt0.png}
+\end{figure}
+\begin{figure}[H]
+	 \includegraphics[scale=0.7]{mt1.png}
+\end{figure}
+\begin{figure}[H]
+	 \includegraphics[scale=0.4]{mt2.png}
+	 \caption{index.txt}
 \end{figure}
 
+完整结果可以运行crawler-thread.py（见readme.txt)
 
 
 \section{分析与思考}
 \begin{itemize}
-	\item beautifulsoup解析html文件得到的是bs4.BeautifulSoup类型对象; 解析方法如果不指定features = "html.parser"，会弹warning。网上资料显示这是默认的解析方法，还可以选择其他的解析方法。
-	\item soup.findAll()方法得到一个存有许多标签（tag）的list。这些tag常常是多层嵌套的，可以用parent,contents等多种方法访问。
-	\item \textbf{拓展思考：} 问题1中的href url有绝对路径、相对路径和javascript。如果需要进一步处理可能需要分类
-	\item tag.find()方法会从这个标签的所有\textbf{子标签}中查找指定内容，并不能查找该标签同层（\textbf{包括自己}）的内容！所以问题3中用i.contents[0].find(...)会什么也找不到。这里被坑了好久
-	\item 知乎日报文章的标题\textbf{并没有}使用<title>标签，而是用了<span class="title">标签，所以不能直接用tag.title，因此我选择使用tag.string获取标题内容。
+	\item BloomFilter中使用最优的k时，bitArray长度和准确率正相关，但也会影响运行效率，需要做出权衡。
+	\item BloomFilter的hash函数也影响准确率，碰撞少的哈希函数更优
+	\item 多线程爬虫为了避免一个线程卡住，很多地方需要加timeout，也要避免加太多锁导致死锁
+	\item 在使用线程队列时，要确保task-done无论如何都要调用，否则会出现一个线程卡死队列让队列结束不了
 \end{itemize}
+
 \end{document}
 

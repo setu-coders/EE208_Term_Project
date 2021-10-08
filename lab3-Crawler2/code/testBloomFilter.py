@@ -11,36 +11,40 @@ def readWordsFile(filename):
         return words
 
 
-def test():
+def testBF(testSize,bitSize,words):
 
-    testSize = 5000
     falsePositiveCount = 0
-
-    bitSize = 20 * testSize
     optimal_k = bloomFilter.get_optimal_k(bitSize,testSize)
-    words = readWordsFile("words.txt")
-
-    print(f"Randomly choosing {(testSize)} words from {(len(words))} words")
-    print(f"BitarraySize: {(bitSize)}, k: {optimal_k}")
+    
+    #print(f"Randomly choosing {(testSize)} words from {(len(words))} words")
+    #print(f"BitarraySize: {(bitSize)}, k: {optimal_k}")
 
     myBF = bloomFilter.BloomFilter(size = bitSize, k = optimal_k)
     mySet = set()
-
 
     for i in range(testSize):
         currentword = random.choice(words)
         if myBF.find(currentword):
             if currentword not in mySet:
-            falsePositiveCount += 1
+                falsePositiveCount += 1
         else:
             myBF.add(currentword)
             mySet.add(currentword)
     
+    
     return falsePositiveCount / testSize
 
 if __name__ == "__main__":
-    N = 10
-    print(f"Has {(falsePositiveCount / testSize * 100)} % false positive rate in {(testSize)} strings ")
+    N = 100
+    tot = 0
+    tSize = 5000
+    bSize = 5 * tSize
+    words = readWordsFile("words.txt")
+    for testn in range(1,N+1):
+        res = testBF(testSize=tSize,bitSize=bSize,words=words)
+        print(f"test #{testn}, false positive rate: {res * 100}%")
+        tot += res
+    print(f"{N} tries, average {(tot / N * 100)} % false positive rate in {(tSize)} testset strings (chosen from {len(words)}), bitArray length:{bSize}")
 
 
 
