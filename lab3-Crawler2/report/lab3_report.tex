@@ -108,32 +108,50 @@ def add(self,str):
                 return False
         return True 
 \end{python}
-\subsection{BloomFilter测试}
-
-       
+\subsubsection{BloomFilter测试}
+首先从字符串集中随机选取testSize个字符串作为测试集；接着创建BloomFilter和作为对照组的set（python标准库）。其中，BloomFilter的参数为bitArray大小和k（哈希函数数量），最优的k用$k_{optimal} = \lceil \ln{2} \frac{m}{n} \rceil$计算得出。
+将每个字符串分别加入BloomFilter和set，如果加入时BloomFilter认为字符串已经存在，但是在set中不存在，则说明BloomFilter出现了错误（FalsePositive）。
+统计得到的FalsePositive总数量占测试集大小即为错误率（FalsePositiveRate）。
 \subsection{问题2-多线程爬虫}
-对于每个网页，其中大多都含有许多指向其他网页的url，这样网页-子页-子页的子页\dots 就可以形成树。
-众所周知，树有bfs/dfs遍历，区别就是对网页中找到的url（子页），使用FIFO/FILO队列。
-
+外部IO思路与lab2相同，多线程实现类似BFS，区别是多个线程同时往队列中添加task和获取task。queue中存储的是待爬的url。
+先把起始url加入queue，并且设置多个守护线程开始工作。\\
+伪代码：\\
+\begin{lstlisting}
+q: Tasks Queue
+crawled: BloomFilter
+count: total crawled URLs
+def crawl():
+    while True:
+        page = Top of q
+        if page not found in crawled:
+           Try getting page, if failed:  call q.task_done()
+           
+            add_page_to_folder(page, content)
+            outlinks = get_all_links(content, page)
+           Add all outlinks to q, unless count > maxCount
+		  Acquire lock and add page into crawled      
+        q.task_done()
+        
+# main():
+Add seed URL  to q
+Create some daemon threads to crawl
+Wait for all task to be done
+\end{lstlisting}
 \section{代码运行结果}
-\subsection{问题1结果}
+\subsection{问题1（BloomFilter）结果}
 完整结果见txt文件
 \begin{figure}[H]
 %	\includegraphics[scale=0.7]{res1.png}
 	 \caption{res1.txt}
 \end{figure}
 
-\subsection{问题2结果}
+\subsection{问题2（多线程爬虫）结果}
 \begin{figure}[H]
 %	\includegraphics[scale=0.7]{res2.png}
 	 \caption{res2.txt}
 \end{figure}
 
-\subsection{问题3结果}
-\begin{figure}[H]
-	%\includegraphics[scale=0.7]{res3.png}
-	 \caption{res3.txt}
-\end{figure}
+
 
 \section{分析与思考}
 \begin{itemize}

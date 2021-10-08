@@ -62,9 +62,6 @@ def get_all_links(content, page):  # html content, page url
 
     return links
 
-def getOptimal_k(m,n):
-    return max(1,math.ceil(math.log(2) * m / n))
-
 def add_page_to_folder(page, content):  
     index_filename = 'index.txt'  
     folder = 'html' 
@@ -96,7 +93,6 @@ def crawl():
                 q.task_done()                 #    访问url失败时也要调用queue.task_done()
                 continue
             
-            
             add_page_to_folder(page, content)
             outlinks = get_all_links(content, page)
             #print(outlinks)
@@ -110,7 +106,6 @@ def crawl():
                 crawled.add(page)
                 varLock.release()
         print("Tasks left:",q.qsize())
-        
         q.task_done()
         
     
@@ -141,7 +136,7 @@ if __name__ == '__main__':
     q = queue.Queue()
 
     bitset_len = 20 * MAXCOUNT
-    crawled = BloomFilter(bitset_len, bloomFilter.get_optimal_k(bitset_len,MAXCOUNT))
+    crawled = bloomFilter.BloomFilter(bitset_len, bloomFilter.get_optimal_k(bitset_len,MAXCOUNT))
     graph = {}
 
     q.put(seed)
