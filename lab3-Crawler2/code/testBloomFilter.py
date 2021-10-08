@@ -3,7 +3,7 @@ import random
 import math
 def readWordsFile(filename):
     # Open the file in read mode
-    with open(filename, "r") as file:
+    with open(filename, "r",encoding='utf-8') as file:
         allText = file.read()
         words = list(map(str, allText.split()))
         # print random string

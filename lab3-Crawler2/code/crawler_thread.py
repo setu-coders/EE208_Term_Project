@@ -73,7 +73,7 @@ def add_page_to_folder(page, content):
     #print(page_link)
     if not os.path.exists(folder):  
         os.mkdir(folder)
-    f = open(os.path.join(folder, filename), 'w')
+    f = open(os.path.join(folder, filename), 'w',encoding='utf-8')      #在windows系统运行务必设置encoding='utf-8',否则系统会尝试用gbk写然后报错
     f.write(str(content))
     f.close()
 

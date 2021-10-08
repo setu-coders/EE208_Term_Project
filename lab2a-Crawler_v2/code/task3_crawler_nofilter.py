@@ -29,7 +29,7 @@ def get_page(page,coding = 'utf-8'):
     except:
         raise ValueError
     else:
-        return content.decode(coding)
+        return content.decode(coding) # 用指定的编码方式解码，防止html乱码
 
 
 
@@ -72,7 +72,7 @@ def add_page_to_folder(page, content):
     #print(page_link)
     if not os.path.exists(folder):  
         os.mkdir(folder)
-    f = open(os.path.join(folder, filename), 'w')
+    f = open(os.path.join(folder, filename), 'w',encoding='utf-8')
     f.write(str(content))
     f.close()
 
