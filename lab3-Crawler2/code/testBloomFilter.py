@@ -3,7 +3,7 @@ import random
 import math
 def readWordsFile(filename):
     # Open the file in read mode
-    with open(filename, "r") as file:
+    with open(filename, "r",encoding='utf-8') as file:
         allText = file.read()
         words = list(map(str, allText.split()))
         # print random string
@@ -17,7 +17,7 @@ def getOptimal_k(m,n):
 testSize = 2000
 falsePositiveCount = 0
 
-bitSize = 20000
+bitSize = 10000
 optimal_k = getOptimal_k(bitSize,testSize)
 words = readWordsFile("words.txt")
 
