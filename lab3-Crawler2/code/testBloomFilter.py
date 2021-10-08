@@ -1,4 +1,4 @@
-from bloomFilter import BloomFilter
+import bloomFilter
 import random
 import math
 def readWordsFile(filename):
@@ -10,21 +10,19 @@ def readWordsFile(filename):
         #print(random.choice(words))
         return words
 
-def getOptimal_k(m,n):
-    return max(1,math.ceil(math.log(2) * m / n))
 
 
 testSize = 2000
 falsePositiveCount = 0
 
-bitSize = 10000
-optimal_k = getOptimal_k(bitSize,testSize)
+bitSize = 20000
+optimal_k = bloomFilter.get_optimal_k(bitSize,testSize)
 words = readWordsFile("words.txt")
 
 print(f"Randomly choosing {(testSize)} words from {(len(words))} words")
 print(f"BitarraySize: {(bitSize)}, k: {optimal_k}")
 
-myBF = BloomFilter(size = bitSize, k = optimal_k)
+myBF = bloomFilter.BloomFilter(size = bitSize, k = optimal_k)
 mySet = set()
 
 

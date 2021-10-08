@@ -16,7 +16,7 @@ import queue
 import time
 from bs4 import BeautifulSoup
 import argparse
-from bloomFilter import BloomFilter  # 自己实现的BloomFilter类
+import bloomFilter  # 自己实现的BloomFilter类
 
 
 TIMEOUTSECONDS = 3 #访问超时时间
@@ -114,8 +114,7 @@ def crawl():
         q.task_done()
         
     
-def get_optimal_k(m,n):      # m: bitset length   n:  total number of words(urls)
-    return max(1,math.ceil(math.log(2) * m / n))          
+  
 
 
 if __name__ == '__main__':
@@ -142,7 +141,7 @@ if __name__ == '__main__':
     q = queue.Queue()
 
     bitset_len = 20 * MAXCOUNT
-    crawled = BloomFilter(bitset_len, get_optimal_k(bitset_len,MAXCOUNT))
+    crawled = BloomFilter(bitset_len, bloomFilter.get_optimal_k(bitset_len,MAXCOUNT))
     graph = {}
 
     q.put(seed)
