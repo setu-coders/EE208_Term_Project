@@ -150,7 +150,7 @@ if __name__ == '__main__':
     # import ipdb; ipdb.set_trace()
     start = datetime.now()
     try:
-        IndexFiles('html', "index_zhCN")
+        IndexFiles('html', "index_zhCN_2")
         end = datetime.now()
         print(end - start)
     except Exception as e:

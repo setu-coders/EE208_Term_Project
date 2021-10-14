@@ -3,6 +3,9 @@ rawtxt/
 index/
 index_zhCN/
 
+#submit zips
+5200309*.zip
+
 #PDFs
 *.pdf
 

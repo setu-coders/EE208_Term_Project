@@ -99,7 +99,7 @@ f.write(str(content))
 f.close()
 \end{python}
 \begin{figure}[H]
-	%\includegraphics[scale=0.6]{fpr_l.png}
+	\includegraphics[width=\textwidth]{selftag.png}
 	\centering
 	 \caption{含有网页自身URL的自定义注释标签}
 \end{figure}
@@ -109,60 +109,83 @@ f.close()
 \item 文件名、文件路径直接从os中获取；
 \item title通过BeautifulSoup解析<title><\textbackslash title>标签获取  （ get{\_}self{\_}url(content) ）
 \item URL通过正则表达式，匹配\ref{addhtml}中添加的自定义注释标签获取。 （ get{\_}title(content) ）
-\item 文本内容通过clean{\_}html(content)函数去除内嵌代码和html标签后
+\item 文本内容通过clean{\_}html(content)函数去除内嵌代码和html标签后,使用jieba库的cut{\_}for{\_}search()函数进行分词，最终获取\textbf{空格分隔的纯文字内容}（contents）；
+\item 将name, path, title, URL, contents加入doc的Field中。其中前四者类型为t1(存储，不索引），contents为t2(不存储但索引)。
+\item 使用WhitespaceAnalyzer，建立索引。
 
 \end{itemize}
-\subsection{问题2-多线程爬虫}
-外部IO思路与lab2相同，多线程实现类似BFS，区别是多个线程同时往队列中添加task和获取task。queue中存储的是待爬的url。
-先把起始url加入queue，并且设置多个守护线程开始工作。\\
-伪代码：\\
+\subsection{实现搜索}
+对用户输入的搜索词，使用与索引时相同的jieba.cut{\_}for{\_}search()函数和WhitespaceAnalyzer，经过QueryParser处理搜索词（QueryParser能够处理布尔运算符)后，使用searcher搜索。得到结果并输出每个结果的path, filename, score, URL 和 title.
 
-\newpage
 \section{代码运行结果}
-\subsection{问题1（BloomFilter）结果}
-m = bitArray长度，n = 测试集大小，k = 哈希函数数量
-\subsubsection{m = 5n,k最优}
+\subsection{建立索引}
+运行IndexFiles{\_}zhCN.py
 \begin{figure}[H]
-	%\includegraphics[scale=0.6]{fpr_l.png}
+	\includegraphics[width=0.7\textwidth]{htmls.png}
 	\centering
-	 \caption{FalsePositiveRate- m = 5n}
+	 \caption{html}
 \end{figure}
-\subsubsection{m = 20n,k最优}
 \begin{figure}[H]
-	%\includegraphics[scale=0.6]{fpr.png}
+	\includegraphics[width=0.7\textwidth]{indexed.png}
 	\centering
-	 \caption{FalsePositiveRate- m = 20n}
+	 \caption{IndexFiles{\_}zhCN.py}
 \end{figure}
-
-\subsubsection{m = 100n,k最优}
 \begin{figure}[H]
-	%\includegraphics[scale=0.6]{fpr_h.png}
+	\includegraphics[width=0.7\textwidth]{indexfolder.png}
 	\centering
-	 \caption{FalsePositiveRate- m = 100n}
+	 \caption{index{\_}zhCN}
 \end{figure}
 
-可以看到，在k最优的情况下，bitArray长度相比于测试集大小越大，准确率越高（fpr越低），但是牺牲了运行效率。
-\subsection{问题2（多线程爬虫）结果}
+
+
+\subsection{搜索}
+运行SearchFiles{\_}zhCN.py进行搜索
+\subsubsection{query a-故意找茬}
 \begin{figure}[H]
-	%\includegraphics[scale=0.7]{mt0.png}
-\end{figure}
-\begin{figure}[H]
-	 %\includegraphics[scale=0.7]{mt1.png}
-\end{figure}
-\begin{figure}[H]
-	 %\includegraphics[scale=0.4]{mt2.png}
-	 \caption{index.txt}
+	\includegraphics[width=\textwidth]{query1.png}
+	\centering
+	
 \end{figure}
 
-完整结果可以运行crawler-thread.py（见readme.txt)
+\subsubsection{query b-苹果手机}
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{query2.png}
+	\centering
+\end{figure}
 
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{query3.png}
+	\centering
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{query4.png}
+	\centering
+\end{figure}
+
+\subsubsection{query c-美国俄罗斯}
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{query5.png}
+	\centering
+\end{figure}
+
+\subsubsection{query d-腾讯官司}
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{query6.png}
+	\centering
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{query7.png}
+	\centering
+\end{figure}
 
 \section{分析与思考}
 \begin{itemize}
-	\item BloomFilter中使用最优的k时，bitArray长度和准确率正相关，但也会影响运行效率，需要做出权衡。
-	\item BloomFilter的hash函数也影响准确率，碰撞少的哈希函数更优
-	\item 多线程爬虫为了避免一个线程卡住，很多地方需要加timeout，也要避免加太多锁导致死锁
-	\item 在使用线程队列时，要确保task-done无论如何都要调用，否则会出现一个线程卡死队列让队列结束不了
+	\item 在jieba分词完成后不能使用pylucene的StandardAnalyzer，因为它会将中文单词一个一个字拆开分析，而是应该使用WhitespaceAnalyzer。
+	\item 通过尝试发现，jieba库的cut{\_}for{\_}search()对于构建索引和搜索效果最好，它会将长词的多种分词方法都加入分词结果。同时启用推荐的paddle模块（深度学习分词）能提升分词准确度。 最后经过手动验证，实现搜索的相关性比较高。
+	\item 建立索引时，处于性能和实现难易度考虑我选择在爬虫中把网页自身URL写在html文件里，而不是在index.txt中查询
+	\item 搜索时，需要使用与构建索引时相同的分词和Analyzer。
 \end{itemize}
 
 \end{document}
