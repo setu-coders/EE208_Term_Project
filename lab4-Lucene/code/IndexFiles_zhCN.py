@@ -43,9 +43,11 @@ class Ticker(object):
 
 
 def get_self_url(content):
-    off1 = 17
-    off2 = -4
-    pattern = re.compile("<!- SELF_URL_TAG:.*? -->")
+    prefix = "<!- SELF_URL_TAG:"
+    suffix = " -->"
+    off1 = len(prefix)
+    off2 = - len(suffix)
+    pattern = re.compile(prefix + ".*?" + suffix)
     res = re.search(pattern=pattern,string = content)
     st,ed = res.span()[0],res.span()[1]
     return content[st + off1:ed + off2]
