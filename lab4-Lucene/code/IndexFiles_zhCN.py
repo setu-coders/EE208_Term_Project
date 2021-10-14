@@ -9,12 +9,16 @@ from datetime import datetime
 from java.nio.file import Paths
 from org.apache.lucene.analysis.miscellaneous import LimitTokenCountAnalyzer
 from org.apache.lucene.analysis.standard import StandardAnalyzer
+from org.apache.lucene.analysis.core import WhitespaceAnalyzer
 from org.apache.lucene.document import Document, Field, FieldType, StringField
 from org.apache.lucene.index import FieldInfo, IndexWriter, IndexWriterConfig, IndexOptions
 from org.apache.lucene.store import SimpleFSDirectory
 from org.apache.lucene.util import Version
 import jieba
 import paddle
+import re
+from bs4 import BeautifulSoup
+#pip install paddlepaddle,lxml
 paddle.enable_static()
 
 """
@@ -37,6 +41,31 @@ class Ticker(object):
             sys.stdout.flush()
             time.sleep(1.0)
 
+
+def get_self_url(content):
+    off1 = 17
+    off2 = -4
+    pattern = re.compile("<!- SELF_URL_TAG:.*? -->")
+    res = re.search(pattern=pattern,string = content)
+    st,ed = res.span()[0],res.span()[1]
+    return content[st + off1:ed + off2]
+
+def get_title(content):
+    soup = BeautifulSoup(content,features="html.parser")
+    title_ele = soup.find("title")
+    title = title_ele.string
+    return title
+def clean_html(content):
+    soup = BeautifulSoup(content,features="html.parser")
+    for script in soup(["script", "style"]):   # 去除javascript https://stackoverflow.com/questions/328356/extracting-text-from-html-file-using-python
+        script.extract()
+    text = soup.get_text()
+    # break into lines and remove leading and trailing space on each
+    lines = (line.strip() for line in text.splitlines())
+    # drop blank lines
+    text = '\n'.join(line for line in lines if line)
+    return text
+
 class IndexFiles(object):
     """Usage: python IndexFiles <doc_directory>"""
 
@@ -47,7 +76,7 @@ class IndexFiles(object):
 
         # store = SimpleFSDirectory(File(storeDir).toPath())
         store = SimpleFSDirectory(Paths.get(storeDir))
-        analyzer = StandardAnalyzer()
+        analyzer = WhitespaceAnalyzer()
         analyzer = LimitTokenCountAnalyzer(analyzer, 1048576)
         config = IndexWriterConfig(analyzer)
         config.setOpenMode(IndexWriterConfig.OpenMode.CREATE)
@@ -76,21 +105,35 @@ class IndexFiles(object):
         
         for root, dirnames, filenames in os.walk(root):
             for filename in filenames:
-                if not filename.endswith('.txt'):
+                if not filename.endswith('.html'):
                     continue
                 print("adding", filename)
                 try:
                     path = os.path.join(root, filename)
                     file = open(path, encoding='utf-8')
+
+                    
                     contents = file.read()
-                    #jieba.enable_paddle()
-                    cut_words = jieba.cut(contents,cut_all=True)    # requires paddlepaddle. -> pip install paddlepaddle
-                    contents = " ".join(cut_words)
                     #print(contents[:100])
+                    page_url = get_self_url(contents)
+                    page_title = get_title(contents)
+                    
+                    
+                    contents = clean_html(contents)
+                    
+                    cut_words = jieba.cut_for_search(contents)    # requires paddlepaddle. -> pip install paddlepaddle
+                    contents = " ".join(cut_words)
+                    #print(contents)
                     file.close()
+                    
                     doc = Document()
                     doc.add(Field("name", filename, t1))
                     doc.add(Field("path", path, t1))
+                    doc.add(Field("url", page_url, t1))
+                    doc.add(Field("title", page_title, t1))
+
+                    print(filename,path,page_url,page_title)
+
                     if len(contents) > 0:
                         doc.add(Field("contents", contents, t2))
                     else:
@@ -105,7 +148,7 @@ if __name__ == '__main__':
     # import ipdb; ipdb.set_trace()
     start = datetime.now()
     try:
-        IndexFiles('testfolder_zhCN', "index_zhCN")
+        IndexFiles('html', "index_zhCN")
         end = datetime.now()
         print(end - start)
     except Exception as e:

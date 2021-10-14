@@ -6,6 +6,7 @@ import sys, os, lucene
 
 from java.io import File
 from org.apache.lucene.analysis.standard import StandardAnalyzer
+from org.apache.lucene.analysis.core import WhitespaceAnalyzer
 from org.apache.lucene.index import DirectoryReader
 from org.apache.lucene.queryparser.classic import QueryParser
 from org.apache.lucene.store import SimpleFSDirectory
@@ -32,7 +33,7 @@ def run(searcher, analyzer):
     # command = 'london author:shakespeare' 
     if command == '':
         return
-    command = " ".join(jieba.cut(command,cut_all=True))
+    command = " ".join(jieba.cut_for_search(command))
     print()
     print ("Searching for:", command)
     query = QueryParser("contents", analyzer).parse(command)
@@ -41,7 +42,9 @@ def run(searcher, analyzer):
 
     for i, scoreDoc in enumerate(scoreDocs):
         doc = searcher.doc(scoreDoc.doc)
-        print ('path:', doc.get("path"), 'name:', doc.get("name"), 'score:', scoreDoc.score)
+        print ('path:', doc.get("path"), '  filename:', doc.get("name"), '  score:', scoreDoc.score)
+        print("URL:",doc.get("url"),"  title:",doc.get("title").strip())
+        print("-"*50)
             # print 'explain:', searcher.explain(query, scoreDoc.doc)
 
 
@@ -52,6 +55,6 @@ if __name__ == '__main__':
     #base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
     directory = SimpleFSDirectory(File(STORE_DIR).toPath())
     searcher = IndexSearcher(DirectoryReader.open(directory))
-    analyzer = StandardAnalyzer()#Version.LUCENE_CURRENT)
+    analyzer = WhitespaceAnalyzer()#Version.LUCENE_CURRENT)
     run(searcher, analyzer)
     del searcher

@@ -73,12 +73,12 @@ class IndexFiles(object):
         
         for root, dirnames, filenames in os.walk(root):
             for filename in filenames:
-                if not filename.endswith('.txt'):
+                if not filename.endswith('.html'):
                     continue
                 print("adding", filename)
                 try:
                     path = os.path.join(root, filename)
-                    file = open(path, encoding='gbk')
+                    file = open(path, encoding='utf-8')
                     contents = file.read()
                     file.close()
                     doc = Document()

@@ -1,5 +1,7 @@
 #cached folders
 rawtxt/
+index/
+index_zhCN/
 
 #PDFs
 *.pdf

@@ -25,9 +25,9 @@ def run(searcher, analyzer):
     # while True:
     print()
     print ("Hit enter with no input to quit.")
-    # command = raw_input("Query:")
+    command = input("Query:")
     # command = unicode(command, 'GBK')
-    command = 'london author:shakespeare' 
+    #command = 'london author:shakespeare' 
     if command == '':
         return
 

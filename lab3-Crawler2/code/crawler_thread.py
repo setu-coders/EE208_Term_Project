@@ -22,7 +22,7 @@ import bloomFilter  # 自己实现的BloomFilter类
 
 TIMEOUTSECONDS = 3 #访问超时时间
 MAXFILENAMELENGTH = 50  #文件名最长不超过的长度
-
+SELF_URL_MARKER  = "SELF_URL_TAG:"   # 爬取到的网页写入文件时，在html文件末尾附上该网页的url方便查询
 
 header = {'User-Agent': 'user-agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.106 Safari/537.36 Edg/80.0.361.54'}
 
@@ -72,6 +72,7 @@ def add_page_to_folder(page, content):
     if not os.path.exists(folder):  
         os.mkdir(folder)
     f = open(os.path.join(folder, filename), 'w',encoding='utf-8')      #在windows系统运行务必设置encoding='utf-8',否则系统会尝试用gbk写然后报错
+    f.write("<!- "+SELF_URL_MARKER + page + " -->" + "\n")
     f.write(str(content))
     f.close()
 
