@@ -3,7 +3,6 @@
 INDEX_DIR = "IndexFiles.index"
 
 import sys, os, lucene
-from lucene import *
 from java.io import File
 from org.apache.lucene.analysis.standard import StandardAnalyzer
 from org.apache.lucene.analysis.core import WhitespaceAnalyzer
@@ -13,6 +12,7 @@ from org.apache.lucene.queryparser.classic import MultiFieldQueryParser
 from org.apache.lucene.store import SimpleFSDirectory
 from org.apache.lucene.search import IndexSearcher
 from org.apache.lucene.search import BooleanClause
+from org.apache.lucene.search import BooleanQuery
 from org.apache.lucene.util import Version
 import jieba
 import paddle
@@ -26,6 +26,43 @@ search query entered against the 'contents' field.  It will then display the
 search.close() is currently commented out because it causes a stack overflow in
 some cases.
 """
+def parseCommand(command,options_dict):
+    '''
+    input: C title:T author:A language:L
+    output: {'contents':C, 'title':T, 'author':A, 'language':L}
+
+    Sample:
+    input:'contenance title:henri language:french author:william shakespeare'
+    output:{'author': ' william shakespeare',
+                   'language': ' french',
+                   'contents': ' contenance',
+                   'title': ' henri'}
+    '''
+    allowed_opt = options_dict.keys()
+    #allowed_opt = ['site']
+    command_dict = {}
+    opt = 'contents'
+    for i in command.split(' '):
+        if ':' in i:
+            opt, value = i.split(':')[:2]
+            opt = opt.lower()
+            if opt in allowed_opt and value != '':
+                command_dict[opt] = (command_dict.get(opt, '') + ' ' + value).strip()
+        else:
+            command_dict[opt] = (command_dict.get(opt, '') + ' ' + i).strip()
+    return command_dict
+
+def create_query_combined(command,options_dict):  #  将多种query通过options_dict的布尔要求创建组合的query
+    command_dict = parseCommand(command,options_dict)
+    if 'contents' in command_dict:
+        command_dict['contents'] = ' '.join(jieba.cut_for_search(command_dict['contents']))
+    print(command_dict,options_dict)
+    querys = BooleanQuery.Builder()
+    for k,v in command_dict.items():
+        query = QueryParser(k, analyzer).parse(v)
+        querys.add(query, options_dict[k] if k in options_dict else BooleanClause.Occur.MUST)  # 允许对不同的query指定不同的option(MUST/SHOULD/...)
+    return querys
+
 def run(searcher, analyzer):
     # while True:
     print()
@@ -35,24 +72,32 @@ def run(searcher, analyzer):
     # command = 'london author:shakespeare' 
     if command == '':
         return
-    #command = " ".join(jieba.cut_for_search(command))
-    
+    #command = " ".join(jieba.cut_for_search(command))   
     print()
     
-    #site = input("site:")
-    fields = ["contents","url"]
     MUST = BooleanClause.Occur.MUST
-
-    print ("Searching for:", command)
-
-    query = MultiFieldQueryParser.parse(command,fields,[MUST,MUST],analyzer)
-    scoreDocs = searcher.search(query, 50).scoreDocs
-    print ("%s total matching documents." % len(scoreDocs))
+    SHOULD = BooleanClause.Occur.SHOULD
+    querys = create_query_combined(command,options_dict = {'site':MUST})
     
-    for i, scoreDoc in enumerate(scoreDocs):
+    """
+    command_dict = parseCommand(command)
+    print(command_dict)
+    querys = BooleanQuery.Builder()
+    for k,v in command_dict.items():
+        query = QueryParser(k, analyzer).parse(v)
+        querys.add(query, BooleanClause.Occur.MUST)
+    """
+
+    scoreDocs = searcher.search(querys.build(), 50).scoreDocs
+    
+    print("%s total matching documents." % len(scoreDocs))
+
+
+    for scoreDoc in scoreDocs:
         doc = searcher.doc(scoreDoc.doc)
-        print ('path:', doc.get("path"), '  filename:', doc.get("name"), '  score:', scoreDoc.score)
-        print("URL:",doc.get("url"),"  title:",doc.get("title").strip())
+    
+        print ('path:', doc.get("path"), '\nfilename:', doc.get("name"), '\nscore:', scoreDoc.score)
+        print("URL:",doc.get("url"),"\ndomain:",doc.get("site"),"\ntitle:",doc.get("title").strip())
         print("-"*50)
             # print 'explain:', searcher.explain(query, scoreDoc.doc)
 

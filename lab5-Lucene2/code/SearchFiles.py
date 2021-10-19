@@ -62,6 +62,7 @@ def run(searcher, analyzer):
         print ("Searching for:", command)
         
         command_dict = parseCommand(command)
+        print(command_dict)
         querys = BooleanQuery.Builder()
         for k,v in command_dict.items():
             query = QueryParser(k, analyzer).parse(v)

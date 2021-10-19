@@ -10,7 +10,7 @@ from java.nio.file import Paths
 from org.apache.lucene.analysis.miscellaneous import LimitTokenCountAnalyzer
 from org.apache.lucene.analysis.standard import StandardAnalyzer
 from org.apache.lucene.analysis.core import WhitespaceAnalyzer
-from org.apache.lucene.document import Document, Field, FieldType, StringField
+from org.apache.lucene.document import Document, Field, FieldType, StringField, TextField
 from org.apache.lucene.index import FieldInfo, IndexWriter, IndexWriterConfig, IndexOptions
 from org.apache.lucene.store import SimpleFSDirectory
 from org.apache.lucene.util import Version
@@ -18,6 +18,7 @@ import jieba
 import paddle
 import re
 from bs4 import BeautifulSoup
+from urllib.parse import urlparse
 #pip install paddlepaddle,lxml
 paddle.enable_static()
 
@@ -51,6 +52,9 @@ def get_self_url(content):
     res = re.search(pattern=pattern,string = content)
     st,ed = res.span()[0],res.span()[1]
     return content[st + off1:ed + off2]
+
+def get_domain(url):
+    return urlparse(url).netloc
 
 def get_title(content):
     soup = BeautifulSoup(content,features="html.parser")
@@ -118,8 +122,8 @@ class IndexFiles(object):
                     contents = file.read()
                     #print(contents[:100])
                     page_url = get_self_url(contents)
+                    page_domain = get_domain(page_url)
                     page_title = get_title(contents)
-                    
                     
                     contents = clean_html(contents)
                     
@@ -132,9 +136,10 @@ class IndexFiles(object):
                     doc.add(Field("name", filename, t1))
                     doc.add(Field("path", path, t1))
                     doc.add(Field("url", page_url, t1))
+                    doc.add(TextField("site",page_domain,Field.Store.YES))       # 不能用t1，要想搜索site必须把site设为indexed！
                     doc.add(Field("title", page_title, t1))
 
-                    print(filename,path,page_url,page_title)
+                    print(filename,path,page_url,page_domain,page_title)
 
                     if len(contents) > 0:
                         doc.add(Field("contents", contents, t2))
@@ -150,7 +155,7 @@ if __name__ == '__main__':
     # import ipdb; ipdb.set_trace()
     start = datetime.now()
     try:
-        IndexFiles('html', "index_zhCN_2")
+        IndexFiles('../../html', "index_zhCN")
         end = datetime.now()
         print(end - start)
     except Exception as e:
