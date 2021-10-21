@@ -62,7 +62,7 @@ def get_all_links(content, page):  # html content, page url
 
 def add_page_to_folder(page, content):  
     index_filename = 'index.txt'  
-    folder = 'html' 
+    folder = 'html_2' 
     filename = valid_filename(page)  
     #print(filename)
     index = open(index_filename, 'a')
@@ -76,13 +76,19 @@ def add_page_to_folder(page, content):
     f.write(str(content))
     f.close()
 
+def match_required_url(url,restriction_url):
+    return (restriction_url == '*' or restriction_url in url)
+
 count = 0
 MAXCOUNT = 50
 successful = 0
 failed = 0
+crawl_only = "https://news.sjtu.edu.cn"
+
 def crawl():
     global successful
     global failed
+    global crawl_only
     while True:
         
         page = q.get(block = True,timeout = TIMEOUTSECONDS)
@@ -104,7 +110,7 @@ def crawl():
             #print(outlinks)
             global count
             for link in outlinks:
-                if (not crawled.find(link)) and count < MAXCOUNT :
+                if (not crawled.find(link)) and count < MAXCOUNT and match_required_url(link,crawl_only):
                     q.put(link)
                     count += 1
             if varLock.acquire():
