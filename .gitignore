@@ -2,6 +2,7 @@
 rawtxt/
 index/
 index_zhCN/
+index_img/
 
 #submit zips
 5200309*.zip
@@ -13,6 +14,13 @@ index_zhCN/
 *.html
 *.htm
 html/
+html_0/
+html_1/
+html_2/
+html_3/
+html_4/
+html_img/
+html_zhCN/
 
 #MacOS stuff
 .DS_Store
