@@ -2,7 +2,7 @@
 
 INDEX_DIR = "IndexFiles.index"
 
-import sys, os, lucene, threading, time
+import sys, os, lucene, threading, time, math
 from datetime import datetime
 
 # from java.io import File
@@ -38,16 +38,16 @@ class Ticker(object):
 class SimpleSimilarity(PythonClassicSimilarity):
 
     def lengthNorm(self, numTerms):
-        return 1.0
+        return 1 / math.sqrt(numTerms)
 
     def tf(self, freq):
-        return freq
+        return math.sqrt(freq)
 
     def sloppyFreq(self, distance):
-        return 2.0
+        return 1 / (distance + 1)
 
     def idf(self, docFreq, numDocs):
-        return 1.0
+        return math.log((numDocs + 1) / (docFreq + 1))
 
     def idfExplain(self, collectionStats, termStats):
         return Explanation.match(1.0, "inexplicable", [])

@@ -26,7 +26,7 @@ search query entered against the 'contents' field.  It will then display the
 search.close() is currently commented out because it causes a stack overflow in
 some cases.
 """
-def parseCommand(command,options_dict): #将指令中的每个冒号指令提取出来,返回dict
+def parseCommand(command,options_dict):
     '''
     input: C title:T author:A language:L
     output: {'contents':C, 'title':T, 'author':A, 'language':L}
@@ -39,6 +39,7 @@ def parseCommand(command,options_dict): #将指令中的每个冒号指令提取
                    'title': ' henri'}
     '''
     allowed_opt = options_dict.keys()
+    #allowed_opt = ['site']
     command_dict = {}
     opt = 'contents'
     for i in command.split(' '):
@@ -51,16 +52,6 @@ def parseCommand(command,options_dict): #将指令中的每个冒号指令提取
             command_dict[opt] = (command_dict.get(opt, '') + ' ' + i).strip()
     return command_dict
 
-def create_query_combined(command,options_dict,tokenized = True):  #  将多种query通过options_dict的布尔要求创建组合的query
-    command_dict = parseCommand(command,options_dict)
-    if 'contents' in command_dict and tokenized:
-        command_dict['contents'] = ' '.join(jieba.cut_for_search(command_dict['contents']))
-    print(command_dict,options_dict)
-    querys = BooleanQuery.Builder()
-    for k,v in command_dict.items():    # k: field  v: text input
-        query = QueryParser(k, analyzer).parse(v)
-        querys.add(query, options_dict[k] if k in options_dict else BooleanClause.Occur.MUST)  # 允许对不同的query指定不同的option(MUST/SHOULD/...)
-    return querys
 
 def run(searcher, analyzer):
     # while True:
@@ -71,23 +62,12 @@ def run(searcher, analyzer):
     # command = 'london author:shakespeare' 
     if command == '':
         return
-    #command = " ".join(jieba.cut_for_search(command))   
-    print()
+    command = " ".join(jieba.cut_for_search(command))   
+    print("Searching for:",command)
     
-    MUST = BooleanClause.Occur.MUST
-    SHOULD = BooleanClause.Occur.SHOULD
-    querys = create_query_combined(command,options_dict = {'site':MUST})
-    
-    """
-    command_dict = parseCommand(command)
-    print(command_dict)
-    querys = BooleanQuery.Builder()
-    for k,v in command_dict.items():
-        query = QueryParser(k, analyzer).parse(v)
-        querys.add(query, BooleanClause.Occur.MUST)
-    """
+    query = QueryParser("contents", analyzer).parse(command)
 
-    scoreDocs = searcher.search(querys.build(), 50).scoreDocs
+    scoreDocs = searcher.search(query, 50).scoreDocs
     
     print("%s total matching documents." % len(scoreDocs))
 
@@ -95,14 +75,14 @@ def run(searcher, analyzer):
     for scoreDoc in scoreDocs:
         doc = searcher.doc(scoreDoc.doc)
     
-        print ('path:', doc.get("path"), '\nfilename:', doc.get("name"), '\nscore:', scoreDoc.score)
-        print("URL:",doc.get("url"),"\ndomain:",doc.get("site"),"\ntitle:",doc.get("title").strip())
+        print ('\nscore:', scoreDoc.score)
+        print("URL:",doc.get("url"),"\nimg_url:",doc.get("img_url"),"\ntitle:",doc.get("title").strip())
         print("-"*50)
             # print 'explain:', searcher.explain(query, scoreDoc.doc)
 
 
 if __name__ == '__main__':
-    STORE_DIR = "index_zhCN"
+    STORE_DIR = "index_img"
     lucene.initVM(vmargs=['-Djava.awt.headless=true'])
     print ('lucene', lucene.VERSION)
     #base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))

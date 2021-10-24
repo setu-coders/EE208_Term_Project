@@ -3,16 +3,20 @@
 INDEX_DIR = "IndexFiles.index"
 
 import sys, os, lucene
-
+import math
 from java.io import File
 from org.apache.lucene.analysis.standard import StandardAnalyzer
+from org.apache.lucene.analysis.core import WhitespaceAnalyzer
 from org.apache.lucene.index import DirectoryReader
 from org.apache.lucene.queryparser.classic import QueryParser
+from org.apache.lucene.queryparser.classic import MultiFieldQueryParser
 from org.apache.lucene.store import SimpleFSDirectory
 from org.apache.lucene.search import IndexSearcher
-from org.apache.lucene.util import Version
 from org.apache.pylucene.search.similarities import PythonSimilarity, PythonClassicSimilarity
-
+from org.apache.lucene.util import Version
+import jieba
+import paddle
+paddle.enable_static()
 """
 This script is loosely based on the Lucene (java implementation) demo class 
 org.apache.lucene.demo.SearchFiles.  It will prompt for a search query, then it
@@ -22,20 +26,19 @@ search query entered against the 'contents' field.  It will then display the
 search.close() is currently commented out because it causes a stack overflow in
 some cases.
 """
-
 class SimpleSimilarity(PythonClassicSimilarity):
 
     def lengthNorm(self, numTerms):
-        return 1.0
+        return 1 / math.sqrt(numTerms)
 
     def tf(self, freq):
-        return freq
+        return math.sqrt(freq)
 
     def sloppyFreq(self, distance):
-        return 2.0
+        return 1 / (distance + 1)
 
     def idf(self, docFreq, numDocs):
-        return 1.0
+        return math.log((numDocs + 1) / (docFreq + 1))
 
     def idfExplain(self, collectionStats, termStats):
         return Explanation.match(1.0, "inexplicable", [])
@@ -44,12 +47,12 @@ def run(searcher, analyzer):
     # while True:
     print()
     print ("Hit enter with no input to quit.")
-    # command = raw_input("Query:")
+    command = input("Query:")
     # command = unicode(command, 'GBK')
-    command = 'london author:shakespeare' 
+    # command = 'london author:shakespeare' 
     if command == '':
         return
-
+    command = " ".join(jieba.cut_for_search(command))
     print()
     print ("Searching for:", command)
     query = QueryParser("contents", analyzer).parse(command)
@@ -58,19 +61,20 @@ def run(searcher, analyzer):
 
     for i, scoreDoc in enumerate(scoreDocs):
         doc = searcher.doc(scoreDoc.doc)
-        print ('path:', doc.get("path"), 'name:', doc.get("name"), 'score:', scoreDoc.score)
+        print ('path:', doc.get("path"), '  filename:', doc.get("name"), '  score:', scoreDoc.score)
+        print("URL:",doc.get("url"),"  title:",doc.get("title").strip())
+        print("-"*50)
             # print 'explain:', searcher.explain(query, scoreDoc.doc)
 
 
 if __name__ == '__main__':
-    STORE_DIR = "index2"
+    STORE_DIR = "index_sim"
     lucene.initVM(vmargs=['-Djava.awt.headless=true'])
     print ('lucene', lucene.VERSION)
     #base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
     directory = SimpleFSDirectory(File(STORE_DIR).toPath())
     searcher = IndexSearcher(DirectoryReader.open(directory))
-    # set a new similarity computing method
-    searcher.setSimilarity(SimpleSimilarity())    
-    analyzer = StandardAnalyzer()#Version.LUCENE_CURRENT)
+    analyzer = WhitespaceAnalyzer()#Version.LUCENE_CURRENT)
+    searcher.setSimilarity(SimpleSimilarity())
     run(searcher, analyzer)
     del searcher

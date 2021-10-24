@@ -61,6 +61,7 @@ def get_title(content):
     title_ele = soup.find("title")
     title = title_ele.string
     return title
+    
 def clean_html(content):
     soup = BeautifulSoup(content,features="html.parser")
     for script in soup(["script", "style"]):   # 去除javascript https://stackoverflow.com/questions/328356/extracting-text-from-html-file-using-python
@@ -118,7 +119,6 @@ class IndexFiles(object):
                     path = os.path.join(root, filename)
                     file = open(path, encoding='utf-8')
 
-                    
                     contents = file.read()
                     #print(contents[:100])
                     page_url = get_self_url(contents)

@@ -10,16 +10,15 @@ from java.nio.file import Paths
 from org.apache.lucene.analysis.miscellaneous import LimitTokenCountAnalyzer
 from org.apache.lucene.analysis.standard import StandardAnalyzer
 from org.apache.lucene.analysis.core import WhitespaceAnalyzer
-from org.apache.lucene.document import Document, Field, FieldType, StringField, TextField
+from org.apache.lucene.document import Document, Field, FieldType, StringField
 from org.apache.lucene.index import FieldInfo, IndexWriter, IndexWriterConfig, IndexOptions
 from org.apache.lucene.store import SimpleFSDirectory
 from org.apache.lucene.util import Version
+from org.apache.pylucene.search.similarities import PythonSimilarity, PythonClassicSimilarity
 import jieba
 import paddle
 import re
 from bs4 import BeautifulSoup
-from urllib.parse import urlparse
-from urllib.parse import urljoin
 #pip install paddlepaddle,lxml
 paddle.enable_static()
 
@@ -54,9 +53,6 @@ def get_self_url(content):
     st,ed = res.span()[0],res.span()[1]
     return content[st + off1:ed + off2]
 
-def get_domain(url):
-    return urlparse(url).netloc
-
 def get_title(content):
     soup = BeautifulSoup(content,features="html.parser")
     title_ele = soup.find("title")
@@ -72,40 +68,23 @@ def clean_html(content):
     # drop blank lines
     text = '\n'.join(line for line in lines if line)
     return text
-def add_imgs(content,pageurl):
-    VALID_TEXT_LEN = 20
-    t1 = FieldType()
-    t1.setStored(True)
-    t1.setTokenized(False)
-    t1.setIndexOptions(IndexOptions.NONE)  # Not Indexed
 
-    page_title = get_title(content)
-    docs = []
-    soup = BeautifulSoup(content, features = "html.parser")
-    for img_tag in soup.findAll('img'):
-        img_url = img_tag.get('src','')
-        if len(img_url) < 5:
-            continue
-        texts = ""
-        doc = Document()
-        if(img_url[0] == '/'): # is relative link
-            img_url = urljoin(pageurl,img_url)
-            print(img_url)
-        search_prox = list(img_tag.previous_siblings) + list(img_tag.next_siblings) + list(img_tag.parent.next_siblings) + list(img_tag.parent.previous_siblings)
-        #全部的文字范围
-        for item in search_prox:
-            if item.string:
-                print(item.string[:20])
-                texts += item.string
+class SimpleSimilarity(PythonClassicSimilarity):
 
-        if len(texts) < VALID_TEXT_LEN:   # 文字太短或者为空的不要
-            continue
-        doc.add(Field("title", page_title, t1))
-        doc.add(Field("url", pageurl, t1))
-        doc.add(Field("img_url", img_url, t1))
-        doc.add(TextField("contents",( " ".join(jieba.cut_for_search(texts)) ),Field.Store.YES))
-        docs.append(doc)
-    return docs
+    def lengthNorm(self, numTerms):
+        return 1 / math.sqrt(numTerms)
+
+    def tf(self, freq):
+        return math.sqrt(freq)
+
+    def sloppyFreq(self, distance):
+        return 1 / (distance + 1)
+
+    def idf(self, docFreq, numDocs):
+        return math.log((numDocs + 1) / (docFreq + 1))
+
+    def idfExplain(self, collectionStats, termStats):
+        return Explanation.match(1.0, "inexplicable", [])
 
 class IndexFiles(object):
     """Usage: python IndexFiles <doc_directory>"""
@@ -121,6 +100,8 @@ class IndexFiles(object):
         analyzer = LimitTokenCountAnalyzer(analyzer, 1048576)
         config = IndexWriterConfig(analyzer)
         config.setOpenMode(IndexWriterConfig.OpenMode.CREATE)
+        config.setSimilarity(SimpleSimilarity())     # 自定义 similarity
+        
         writer = IndexWriter(store, config)
 
         self.indexDocs(root, writer)
@@ -149,9 +130,7 @@ class IndexFiles(object):
                 if not filename.endswith('.html'):
                     continue
                 print("adding", filename)
-                DBG = 0
                 try:
-                    DBG += 1
                     path = os.path.join(root, filename)
                     file = open(path, encoding='utf-8')
 
@@ -159,27 +138,31 @@ class IndexFiles(object):
                     contents = file.read()
                     #print(contents[:100])
                     page_url = get_self_url(contents)
-                    #page_domain = get_domain(page_url)z
-                    #page_title = get_title(contents)
+                    page_title = get_title(contents)
                     
-                    docs = add_imgs(contents, page_url)
-                    print("-"*50)
-                    """
                     
+                    contents = clean_html(contents)
+                    
+                    cut_words = jieba.cut_for_search(contents)    # requires paddlepaddle. -> pip install paddlepaddle
+                    contents = " ".join(cut_words)
+                    #print(contents)
+                    file.close()
+                    
+                    doc = Document()
+                    doc.add(Field("name", filename, t1))
+                    doc.add(Field("path", path, t1))
+                    doc.add(Field("url", page_url, t1))
+                    doc.add(Field("title", page_title, t1))
 
-                    print(filename,path,page_url,page_domain,page_title)
+                    print(filename,path,page_url,page_title)
 
                     if len(contents) > 0:
                         doc.add(Field("contents", contents, t2))
                     else:
                         print("warning: no content in %s" % filename)
-                    """
-                    for doc in docs:
-                        writer.addDocument(doc)
-           
+                    writer.addDocument(doc)
                 except Exception as e:
                     print("Failed in indexDocs:", e)
-                    
 
 if __name__ == '__main__':
     lucene.initVM()#vmargs=['-Djava.awt.headless=true'])
@@ -187,7 +170,7 @@ if __name__ == '__main__':
     # import ipdb; ipdb.set_trace()
     start = datetime.now()
     try:
-        IndexFiles('../../html_2', "index_img")
+        IndexFiles('../../html', "index_sim")
         end = datetime.now()
         print(end - start)
     except Exception as e:
