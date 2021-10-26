@@ -1,21 +1,16 @@
 #cached folders
 rawtxt/
-index*/
-index_sim/
 index/
 index_zhCN/
 index_img/
 
-#submit zips and folders
+#submit zips
 5200309*.zip
-code_u/
 
 #PDFs
 *.pdf
 
 #htmls
-*.html
-*.htm
 html/
 html_0/
 html_1/

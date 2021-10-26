@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results:</h1>
+    <hr>
+    <h1>Searching for:{{ command }}</h1>
+    <table>
+       
+        <tbody>
+            {% for doc in docs %}
+                <tr>
+                    <td>{{ doc.title }}</td>
+                </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+</body>
+</html>

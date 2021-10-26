@@ -50,8 +50,19 @@ def parseCommand(command,options_dict): #将指令中的每个冒号指令提取
         else:
             command_dict[opt] = (command_dict.get(opt, '') + ' ' + i).strip()
     return command_dict
+def printScoreDocs(scoreDocs):
+    print("%s total matching documents." % len(scoreDocs))
 
-def create_query_combined(command,options_dict,tokenized = True):  #  将多种query通过options_dict的布尔要求创建组合的query
+
+    for scoreDoc in scoreDocs:
+        doc = searcher.doc(scoreDoc.doc)
+    
+        print ('path:', doc.get("path"), '\nfilename:', doc.get("name"), '\nscore:', scoreDoc.score)
+        print("URL:",doc.get("url"),"\ndomain:",doc.get("site"),"\ntitle:",doc.get("title").strip())
+        print("-"*50)
+    
+
+def create_query_combined(command,analyzer,options_dict,tokenized = True):  #  将多种query通过options_dict的布尔要求创建组合的query
     command_dict = parseCommand(command,options_dict)
     if 'contents' in command_dict and tokenized:
         command_dict['contents'] = ' '.join(jieba.cut_for_search(command_dict['contents']))
@@ -62,13 +73,13 @@ def create_query_combined(command,options_dict,tokenized = True):  #  将多种q
         querys.add(query, options_dict[k] if k in options_dict else BooleanClause.Occur.MUST)  # 允许对不同的query指定不同的option(MUST/SHOULD/...)
     return querys
 
-def run(searcher, analyzer):
+def run(searcher, analyzer,command = ""):
     # while True:
-    print()
-    print ("Hit enter with no input to quit.")
-    command = input("Query:")
-    # command = unicode(command, 'GBK')
-    # command = 'london author:shakespeare' 
+    if not command:
+        print()
+        print ("Hit enter with no input to quit.")
+        command = input("Query:")
+
     if command == '':
         return
     #command = " ".join(jieba.cut_for_search(command))   
@@ -76,7 +87,7 @@ def run(searcher, analyzer):
     
     MUST = BooleanClause.Occur.MUST
     SHOULD = BooleanClause.Occur.SHOULD
-    querys = create_query_combined(command,options_dict = {'site':MUST})
+    querys = create_query_combined(command,analyzer,options_dict = {'site':MUST})
     
     """
     command_dict = parseCommand(command)
@@ -88,18 +99,28 @@ def run(searcher, analyzer):
     """
 
     scoreDocs = searcher.search(querys.build(), 50).scoreDocs
+    rawdocs = [searcher.doc(scoreDoc.doc) for scoreDoc in scoreDocs]
+    return rawdocs
     
-    print("%s total matching documents." % len(scoreDocs))
-
-
-    for scoreDoc in scoreDocs:
-        doc = searcher.doc(scoreDoc.doc)
     
-        print ('path:', doc.get("path"), '\nfilename:', doc.get("name"), '\nscore:', scoreDoc.score)
-        print("URL:",doc.get("url"),"\ndomain:",doc.get("site"),"\ntitle:",doc.get("title").strip())
-        print("-"*50)
             # print 'explain:', searcher.explain(query, scoreDoc.doc)
+def init_search():
+    STORE_DIR = "index_zhCN"
+    try:
+        lucene.initVM(vmargs=['-Djava.awt.headless=true'])
+        print ('lucene', lucene.VERSION)
+    except ValueError:
+        print("Unable to start JVM, or JVM already running")
+    
+    directory = SimpleFSDirectory(File(STORE_DIR).toPath())
+    searcher = IndexSearcher(DirectoryReader.open(directory))
+    analyzer = WhitespaceAnalyzer()#Version.LUCENE_CURRENT)
+    print("done initializing searcher")
+    return directory,searcher,analyzer
 
+def get_search_res(command,searcher,analyzer):
+    result = run(searcher = searcher,analyzer = analyzer,command=command)
+    return result
 
 if __name__ == '__main__':
     STORE_DIR = "index_zhCN"
