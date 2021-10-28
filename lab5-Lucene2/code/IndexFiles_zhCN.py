@@ -1,7 +1,5 @@
 # SJTU EE208
 
-INDEX_DIR = "IndexFiles.index"
-
 import sys, os, lucene, threading, time
 from datetime import datetime
 

@@ -1,7 +1,5 @@
 # SJTU EE208
 
-INDEX_DIR = "IndexFiles.index"
-
 import sys, os, lucene, threading, time
 from datetime import datetime
 
@@ -10,15 +8,17 @@ from java.nio.file import Paths
 from org.apache.lucene.analysis.miscellaneous import LimitTokenCountAnalyzer
 from org.apache.lucene.analysis.standard import StandardAnalyzer
 from org.apache.lucene.analysis.core import WhitespaceAnalyzer
-from org.apache.lucene.document import Document, Field, FieldType, StringField
+from org.apache.lucene.document import Document, Field, FieldType, StringField, TextField
 from org.apache.lucene.index import FieldInfo, IndexWriter, IndexWriterConfig, IndexOptions
 from org.apache.lucene.store import SimpleFSDirectory
 from org.apache.lucene.util import Version
-from org.apache.pylucene.search.similarities import PythonSimilarity, PythonClassicSimilarity
+import argparse
 import jieba
 import paddle
 import re
 from bs4 import BeautifulSoup
+from urllib.parse import urlparse
+from CustomSimilarity import SimpleSimilarity1,SimpleSimilarity2
 #pip install paddlepaddle,lxml
 paddle.enable_static()
 
@@ -53,11 +53,15 @@ def get_self_url(content):
     st,ed = res.span()[0],res.span()[1]
     return content[st + off1:ed + off2]
 
+def get_domain(url):
+    return urlparse(url).netloc
+
 def get_title(content):
     soup = BeautifulSoup(content,features="html.parser")
     title_ele = soup.find("title")
     title = title_ele.string
     return title
+    
 def clean_html(content):
     soup = BeautifulSoup(content,features="html.parser")
     for script in soup(["script", "style"]):   # 去除javascript https://stackoverflow.com/questions/328356/extracting-text-from-html-file-using-python
@@ -69,27 +73,12 @@ def clean_html(content):
     text = '\n'.join(line for line in lines if line)
     return text
 
-class SimpleSimilarity(PythonClassicSimilarity):
-
-    def lengthNorm(self, numTerms):
-        return 1 / math.sqrt(numTerms)
-
-    def tf(self, freq):
-        return math.sqrt(freq)
-
-    def sloppyFreq(self, distance):
-        return 1 / (distance + 1)
-
-    def idf(self, docFreq, numDocs):
-        return math.log((numDocs + 1) / (docFreq + 1))
-
-    def idfExplain(self, collectionStats, termStats):
-        return Explanation.match(1.0, "inexplicable", [])
 
 class IndexFiles(object):
     """Usage: python IndexFiles <doc_directory>"""
 
     def __init__(self, root, storeDir):
+        SIM = [SimpleSimilarity1(),SimpleSimilarity2()]
 
         if not os.path.exists(storeDir):
             os.mkdir(storeDir)
@@ -100,8 +89,9 @@ class IndexFiles(object):
         analyzer = LimitTokenCountAnalyzer(analyzer, 1048576)
         config = IndexWriterConfig(analyzer)
         config.setOpenMode(IndexWriterConfig.OpenMode.CREATE)
-        config.setSimilarity(SimpleSimilarity())     # 自定义 similarity
-        
+        global SIM_TYPE
+        if SIM_TYPE != -1:
+            config.setSimilarity(SIM[SIM_TYPE])
         writer = IndexWriter(store, config)
 
         self.indexDocs(root, writer)
@@ -134,12 +124,11 @@ class IndexFiles(object):
                     path = os.path.join(root, filename)
                     file = open(path, encoding='utf-8')
 
-                    
                     contents = file.read()
                     #print(contents[:100])
                     page_url = get_self_url(contents)
+                    page_domain = get_domain(page_url)
                     page_title = get_title(contents)
-                    
                     
                     contents = clean_html(contents)
                     
@@ -152,9 +141,10 @@ class IndexFiles(object):
                     doc.add(Field("name", filename, t1))
                     doc.add(Field("path", path, t1))
                     doc.add(Field("url", page_url, t1))
+                    doc.add(TextField("site",page_domain,Field.Store.YES))       # 不能用t1，要想搜索site必须把site设为indexed！
                     doc.add(Field("title", page_title, t1))
 
-                    print(filename,path,page_url,page_title)
+                    print(filename,path,page_url,page_domain,page_title)
 
                     if len(contents) > 0:
                         doc.add(Field("contents", contents, t2))
@@ -164,13 +154,21 @@ class IndexFiles(object):
                 except Exception as e:
                     print("Failed in indexDocs:", e)
 
+SIM_TYPE = 0
 if __name__ == '__main__':
+    argparser = argparse.ArgumentParser()
+    argparser.add_argument("-sim")
+    argparser.add_argument("-o")
+    args = argparser.parse_args()
+    SIM_TYPE = int(args.sim)
+    STORE_DIR = args.o
+
     lucene.initVM()#vmargs=['-Djava.awt.headless=true'])
     print('lucene', lucene.VERSION)
     # import ipdb; ipdb.set_trace()
     start = datetime.now()
     try:
-        IndexFiles('../../html', "index_sim")
+        IndexFiles('../../html', STORE_DIR)
         end = datetime.now()
         print(end - start)
     except Exception as e:
