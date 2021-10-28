@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-    <h1>Search for:</h1>
-    <form action="search_results">
-        <label>Username</label>
-        <input type="command" name="command"><br>
-    </form>
-</body>
-</html> 
+{% block searchbar%}
+<h1>Search for:</h1>
+<form action="search_results">
+    <label>Enter search text</label>
+    <input type="command" name="command"><br>    <!-- 用于POST 表单中的command -->
+    <button type="submit">naÏve一下</button>             <!-- type="submit" -->
+</form>
+{% endblock %}

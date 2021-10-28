@@ -1,9 +1,16 @@
+<!DOCTYPE html>
 <html>
+
+<head>
+    <title>Flask Template Example</title>
+</head>
+
 <body>
-  {% if name %}
-    <h2>Hello {{ name }}.</h2>
-  {% else %}
-    <h2>Hello.</h2>
-  {% endif %}
- </body>
+    <h1>Flask Template Example</h1>
+    {% include 'contents.html' %}
+    {% block content %}
+    {% endblock %}
+
+</body>
+
 </html>
