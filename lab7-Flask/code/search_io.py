@@ -15,6 +15,7 @@ def index():
 @app.route('/index', methods=['POST', 'GET'])
 def _index():
     return redirect(url_for('search'))
+# 都重定向到/search
 
 @app.route('/search', methods=['POST', 'GET'])
 def search():
@@ -57,9 +58,9 @@ def loadIndex():
     print("Loaded Index!")
 
 
-def get_abstracts(keyword,docs):
+def get_abstracts(keyword,docs):#通过doc中存储的文件地址访问html文件，从中搜索关键词从而获得摘要
     #print("kw:",keyword)
-    CONTEXT_RANGE = [80,80]
+    CONTEXT_RANGE = [40,40]
     HTML_FOLDER_PATH = "../../"
     abstracts = {}
     for doc in docs:

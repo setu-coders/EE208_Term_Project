@@ -1,4 +1,4 @@
-# SJTU EE208
+# SJTU EE08
 
 INDEX_DIR = "IndexFiles.index"
 
@@ -123,7 +123,9 @@ def init_search():  #初始化lucene JVM 以及读取索引文件夹、创建sea
 
 def get_search_res(command,search_count,searcher,analyzer):   # 返回搜索结果（docs）和分好词的keyword
     vm_env = lucene.getVMEnv()             
-    vm_env.attachCurrentThread()    #解决 RuntimeError: attachCurrentThread() must be called first
+    vm_env.attachCurrentThread()    
+    #每次开一个thread，luceneVM仅在开始时init一次。
+    #解决 RuntimeError: attachCurrentThread() must be called first
     result, keyword= run(searcher = searcher,analyzer = analyzer,command=command,search_count=search_count)
     return result, keyword
 
