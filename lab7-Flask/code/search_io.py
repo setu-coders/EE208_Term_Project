@@ -3,9 +3,9 @@ from flask import Flask, redirect, render_template, request, url_for
 import SearchFiles_zhCN as _search
 from bs4 import BeautifulSoup
 app = Flask(__name__)
-directory = ""
-searcher = 0
-analyzer = 0
+Directory = ""
+Searcher = None
+Analyzer = None
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -20,20 +20,23 @@ def _index():
 def search():
     if request.method == "POST":
         command = request.form['command']
-        return redirect(url_for('search_results', command=command))
+        search_count = request.form['search_count']
+        return redirect(url_for('search_results', command=command, search_count=search_count))
     return render_template("search.html")
 
 
 @app.route('/search_results', methods=['POST','GET'])
 def search_results():
     
-    global searcher,analyzer
+    global Searcher,Analyzer
     if request.method == "POST":
         command = request.form['command']
-        return redirect(url_for('search_results', command=command))
-
+        search_count = request.form['search_count']
+        return redirect(url_for('search_results', command=command, search_count=search_count))
+    
     command = request.args.get('command')
-    docs, keyword = _search.get_search_res(command,searcher,analyzer)
+    search_count = int(request.args.get('search_count'))
+    docs, keyword = _search.get_search_res(command=command,search_count=search_count,searcher = Searcher,analyzer = Analyzer)
 
     if ' ' in keyword:
         keyword = keyword[:keyword.find(' ')]   # 目前使用keyword的第一个单词来显示摘要
@@ -49,19 +52,20 @@ def search_results():
 
 @app.before_first_request  # 启动时初始化JVM和索引，搜索时只调用搜索函数
 def loadIndex():
-    global directory, searcher, analyzer
-    directory, searcher, analyzer = _search.init_search()
-
+    global Directory, Searcher, Analyzer
+    Directory, Searcher, Analyzer = _search.init_search()
     print("Loaded Index!")
 
 
 def get_abstracts(keyword,docs):
     #print("kw:",keyword)
-    CONTEXT_RANGE = [40,40]
+    CONTEXT_RANGE = [80,80]
+    HTML_FOLDER_PATH = "../../"
     abstracts = {}
     for doc in docs:
         try:
-            with open(doc['path'],'r') as file:
+            #print(doc['path'])
+            with open(HTML_FOLDER_PATH + doc['path'],'r') as file:
                 filetext = clean_html(file.read())
                 pos = filetext.find(keyword)
                 if pos != -1:

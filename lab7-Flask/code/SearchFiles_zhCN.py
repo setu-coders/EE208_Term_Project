@@ -70,8 +70,9 @@ def create_query_combined(command_dict,analyzer,options_dict,tokenized = True): 
         querys.add(query, options_dict[k] if k in options_dict else BooleanClause.Occur.MUST)  # 允许对不同的query指定不同的option(MUST/SHOULD/...)
     return querys
 
-def run(searcher, analyzer,command = "",tokenized=True):
+def run(searcher,analyzer,command = "",tokenized=True, search_count = 50):
     # while True:
+    print(searcher,analyzer,command,tokenized,search_count)
     if not command:
         print()
         print ("Hit enter with no input to quit.")
@@ -99,7 +100,7 @@ def run(searcher, analyzer,command = "",tokenized=True):
     #print("creating query")
     querys = create_query_combined(command_dict,analyzer,options_dict = options_dict)    
 
-    scoreDocs = searcher.search(querys.build(), 50).scoreDocs
+    scoreDocs = searcher.search(querys.build(), search_count).scoreDocs
     rawdocs = [searcher.doc(scoreDoc.doc) for scoreDoc in scoreDocs]
 
     keyword = command_dict['contents']
@@ -120,10 +121,10 @@ def init_search():  #初始化lucene JVM 以及读取索引文件夹、创建sea
     print("Done initializing searcher!")
     return directory,searcher,analyzer
 
-def get_search_res(command,searcher,analyzer):   # 返回搜索结果（docs）和分好词的keyword
+def get_search_res(command,search_count,searcher,analyzer):   # 返回搜索结果（docs）和分好词的keyword
     vm_env = lucene.getVMEnv()             
     vm_env.attachCurrentThread()    #解决 RuntimeError: attachCurrentThread() must be called first
-    result, keyword= run(searcher = searcher,analyzer = analyzer,command=command)
+    result, keyword= run(searcher = searcher,analyzer = analyzer,command=command,search_count=search_count)
     return result, keyword
 
 if __name__ == '__main__':
