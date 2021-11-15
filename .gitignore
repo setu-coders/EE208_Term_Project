@@ -11,6 +11,9 @@ index*/
 #PDFs
 *.pdf
 
+#cached ppt
+~$*.pptx
+
 #htmls
 html/
 html_0/
