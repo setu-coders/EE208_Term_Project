@@ -1,6 +1,5 @@
-# SJTU EE08
+# SJTU EE208
 
-INDEX_DIR = "IndexFiles.index"
 
 import sys, os, lucene
 from java.io import File
@@ -53,14 +52,12 @@ def parseCommand(command,options_dict): #将指令中的每个冒号指令提取
 def printScoreDocs(scoreDocs):
     print("%s total matching documents." % len(scoreDocs))
 
-
     for scoreDoc in scoreDocs:
         doc = searcher.doc(scoreDoc.doc)
-        
-        print ('path:', doc.get("path"), '\nfilename:', doc.get("name"), '\nscore:', scoreDoc.score)
-        print("URL:",doc.get("url"),"\ndomain:",doc.get("site"),"\ntitle:",doc.get("title").strip())
+    
+        print ('\nscore:', scoreDoc.score)
+        print("URL:",doc.get("url"),"\nimg_url:",doc.get("img_url"),"\ntitle:",doc.get("title").strip())
         print("-"*50)
-
 
 def create_query_combined(command_dict,analyzer,options_dict,tokenized = True):  #  将多种query通过options_dict的布尔要求创建组合的query
     
@@ -69,10 +66,9 @@ def create_query_combined(command_dict,analyzer,options_dict,tokenized = True): 
         query = QueryParser(k, analyzer).parse(v)
         querys.add(query, options_dict[k] if k in options_dict else BooleanClause.Occur.MUST)  # 允许对不同的query指定不同的option(MUST/SHOULD/...)
     return querys
-
 def run(searcher,analyzer,command = "",tokenized=True, search_count = 50):
     # while True:
-    #print(searcher,analyzer,command,tokenized,search_count)
+    print(searcher,analyzer,command,tokenized,search_count)
     if not command:
         print()
         print ("Hit enter with no input to quit.")
@@ -101,14 +97,23 @@ def run(searcher,analyzer,command = "",tokenized=True, search_count = 50):
     querys = create_query_combined(command_dict,analyzer,options_dict = options_dict)    
 
     scoreDocs = searcher.search(querys.build(), search_count).scoreDocs
+    
     rawdocs = [searcher.doc(scoreDoc.doc) for scoreDoc in scoreDocs]
 
     keyword = command_dict['contents']
     return rawdocs, keyword
     # print 'explain:', searcher.explain(query, scoreDoc.doc)
 
+def get_search_res(command,search_count,searcher,analyzer):   # 返回搜索结果（docs）和分好词的keyword
+    vm_env = lucene.getVMEnv()             
+    vm_env.attachCurrentThread()    
+    #每次开一个thread，luceneVM仅在开始时init一次。
+    #解决 RuntimeError: attachCurrentThread() must be called first
+    result, keyword= run(searcher = searcher,analyzer = analyzer,command=command,search_count=search_count)
+    return result, keyword
+
 def init_search():  #初始化lucene JVM 以及读取索引文件夹、创建searcher，analyzer
-    STORE_DIR = "index_zhCN"
+    STORE_DIR = "index_img"
     try:
         lucene.initVM(vmargs=['-Djava.awt.headless=true'])
         print ('lucene', lucene.VERSION)
@@ -121,16 +126,11 @@ def init_search():  #初始化lucene JVM 以及读取索引文件夹、创建sea
     print("Done initializing searcher!")
     return directory,searcher,analyzer
 
-def get_search_res(command,search_count,searcher,analyzer):   # 返回搜索结果（docs）和分好词的keyword
-    vm_env = lucene.getVMEnv()             
-    vm_env.attachCurrentThread()    
-    #每次开一个thread，luceneVM仅在开始时init一次。
-    #解决 RuntimeError: attachCurrentThread() must be called first
-    result, keyword= run(searcher = searcher,analyzer = analyzer,command=command,search_count=search_count)
-    return result, keyword
+
+
 
 if __name__ == '__main__':
-    STORE_DIR = "index_zhCN"
+    STORE_DIR = "index_img"
     lucene.initVM(vmargs=['-Djava.awt.headless=true'])
     print ('lucene', lucene.VERSION)
     #base_dir = os.path.dirname(os.path.abspath(sys.argv[0]))

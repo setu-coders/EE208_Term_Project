@@ -72,7 +72,7 @@ def create_query_combined(command_dict,analyzer,options_dict,tokenized = True): 
 
 def run(searcher,analyzer,command = "",tokenized=True, search_count = 50):
     # while True:
-    #print(searcher,analyzer,command,tokenized,search_count)
+    print(searcher,analyzer,command,tokenized,search_count)
     if not command:
         print()
         print ("Hit enter with no input to quit.")

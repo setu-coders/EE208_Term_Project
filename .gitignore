@@ -7,9 +7,13 @@ index*/
 
 #submit zips
 5200309*.zip
+html.zip
 
 #PDFs
 *.pdf
+
+#cached ppt
+~$*.pptx
 
 #htmls
 html/

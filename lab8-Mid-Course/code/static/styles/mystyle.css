@@ -1,0 +1,30 @@
+
+        a:link{color:rgb(12, 53, 236);}
+        a:visited{color:lime}
+        a:hover{color:darkviolet}
+        a:active{color:cyan}
+
+        .searchBox {
+          
+          border: 2px outset rgb(112, 149, 251);
+          background-color: rgb(236, 249, 253);    
+          text-align: start;
+          
+        }
+        
+        .imgSearchBox {
+          width: 33%;
+          border: 2px outset rgb(112, 149, 251);
+          background-color: rgb(236, 249, 253);    
+          text-align: start;
+          
+        }
+        .title{
+            text-align: center;
+        }
+        
+        .searchBar {
+            text-align: center;
+        }
+
+        

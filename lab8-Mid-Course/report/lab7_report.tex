@@ -256,17 +256,17 @@ showstringspaces=false,      % Leerzeichen in Strings anzeigen ?
 \newpage
 
 \section{练习题的解决思路}
-\subsection{实现流程}
+\subsection{主要流程}
 网页主要分为两部分：搜索框和结果显示。搜索的大致流程为:
 \begin{enumerate}
 \item 用户搜索框输入搜索词，浏览器发出post请求；(搜索起始页（只有一个搜索框），搜索结果页上也有搜索框，二者都可以发出post请求）
 \item 重定向至含有搜索词的url；
-\item 搜索结果模块get到请求，将搜索词传入lab5中实现的lucene搜索引擎（后端）,返回搜索结果；
+\item 搜索结果模块get到请求，将搜索词传入lab5中实现的lucene搜索引擎（后端）,获取搜索结果
 \item 其中，网页标题、超链接都在索引doc中存储了，但网页文字内容没有存储在doc中（否则索引文件会太大）。
 所以要显示摘要只能通过通过doc中文件路径访问原html文件并从中获取摘要。
 \item 获取到的搜索结果通过flask模板渲染为网页，呈现给用户。
 \end{enumerate}
-\subsection{主要代码}
+\subsection{核心代码}
 \subsubsection{Python}
 \begin{python}
 - SearchFiles_zhCN.py
@@ -303,10 +303,7 @@ def search_results():
         ('search_results', command=command, search_count=search_count))
     
     command = request.args.get('command')
-    try:
-        search_count = max(1,int(request.args.get('search_count')))
-    except Exception:
-        search_count = 50
+    search_count = int(request.args.get('search_count'))
     docs, keyword = _search.get_search_res\
     (command=command,search_count=search_count,\
     searcher = Searcher,analyzer = Analyzer)
@@ -335,7 +332,6 @@ search{\_}bar.html
 <form action="search_results">
     <label>搜索：</label>
     <input type="command" name="command" value="请输入搜索内容"><br>    <!-- 用于POST 表单中的command -->
-    <label>显示数目：</label>
     <input type="search_count" name="search_count" value = "50"><br>
     <button type="submit">naÏve一下</button>             <!-- type="submit" -->
 </form>
@@ -366,38 +362,82 @@ search{\_}results.html
 首页(search.html)仅引用搜索框，同search{\_}results.html
 \section{代码运行结果}
 
+\subsubsection{“中国美国”}
 
 \begin{figure}[H]
-	\includegraphics[width=0.99\textwidth]{s1.png}
+	\includegraphics[width=0.6\textwidth]{1_-1.png}
 	\centering
+	 \caption{默认}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=0.99\textwidth]{s2.png}
+	\includegraphics[width=0.6\textwidth]{1_0.png}
 	\centering
+	 \caption{Similarity0}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=0.99\textwidth]{s3.png}
+	\includegraphics[width=0.6\textwidth]{1_1.png}
 	\centering
+	 \caption{Similarity1}
+\end{figure}
+
+\subsubsection{“最好的编程语言”}
+
+\begin{figure}[H]
+	\includegraphics[width=0.6\textwidth]{2_-1.png}
+	\centering
+	 \caption{默认}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=0.99\textwidth]{s4.png}
+	\includegraphics[width=0.6\textwidth]{2_0.png}
 	\centering
+	 \caption{Similarity0}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=0.99\textwidth]{s5.png}
+	\includegraphics[width=0.6\textwidth]{2_1.png}
 	\centering
+	 \caption{Similarity1}
+\end{figure}
+
+\subsubsection{“中国美食”}
+
+\begin{figure}[H]
+	\includegraphics[width=0.6\textwidth]{3_-1.png}
+	\centering
+	 \caption{默认}
 \end{figure}
 \begin{figure}[H]
-	\includegraphics[width=0.98\textwidth]{s6.png}
+	\includegraphics[width=0.6\textwidth]{3_0.png}
 	\centering
+	 \caption{Similarity0}
 \end{figure}
+\begin{figure}[H]
+	\includegraphics[width=0.6\textwidth]{3_1.png}
+	\centering
+	 \caption{Similarity1}
+\end{figure}
+
+\subsubsection{“搜索引擎”}
+
+\begin{figure}[H]
+	\includegraphics[width=0.6\textwidth]{4_-1.png}
+	\centering
+	 \caption{默认}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=0.6\textwidth]{4_0.png}
+	\centering
+	 \caption{Similarity0}
+\end{figure}
+\begin{figure}[H]
+	\includegraphics[width=0.6\textwidth]{4_1.png}
+	\centering
+	 \caption{Similarity1}
+\end{figure}
+
 \section{分析与思考}
 \begin{itemize}
-	\item 使用flask可以方便地实现前后端分离，即可以在不影响后端的情况下改变前端的显示方式。
-	\item 由于doc的field中没有存储文本内容，显示摘要时需要依赖html原文件，由于摘要是根据关键词显示，这是没办法绕过的
-	\item 网页输入时很多地方用户输入意想不到的内容易引起报错，需要格外注意异常处理。
-	\item 使用lucene搜索时需要注意，只需在初始化时启动jvm并且加载索引文件，之后调用搜索只需attachCurrentThread()   
-	
+	\item 从结果来看，用不同函数重写PythonClassicSimilarity对结果影响并不大，但是和Lucene默认方法有一定区别。不同df、idf结果差不多的原因可能是可能是因为测试的网页数目不够大（8000个）或者本身数据对这些变换不敏感。
+	\item 观察一些结果可以发现（“搜索引擎”的例子比较明显），重写的tf-idf方法似乎对于keyword出现的次数更敏感，相比之下lucene默认的BM25对全文内容考虑更全面，这二者的优劣有待进一步考量。
 \end{itemize}
 
 \end{document}
