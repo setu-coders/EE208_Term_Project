@@ -3,21 +3,13 @@
     
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mystyle.css') }}"/>
        
-<head>
-    <div class=title>
-        <h1>NaÏve 搜索</h1>
-    </div>
-    
-    <title>Search Results</title>
+<head> 
+    {% include 'search.html' %}   
 </head>
 <body>
-    <div class=searchBar>
-        {% include 'search_bar.html' %}   <!--比extends好用一些-->
-    </div>
-    {% block searchbar%}
-    {% endblock %}
+    <title>Search Results</title>
     <hr>
-    <h1>Searching Results:{{ command }},  {{doc_count}} pages found.</h1>
+    <h1>Searching for:{{ command }},  {{doc_count}} pages found.</h1>
     <table>
        
         <dl>

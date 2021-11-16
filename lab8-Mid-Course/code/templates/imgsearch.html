@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
-<style>
-    .searchBar {
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mystyle.css') }}"/>
+    <style>
+        .logo{
             text-align: center;
         }
-</style>
+    </style>
 <head>
     <title></title>
 </head>
 <body>
-    
-    <h1>NaÏve 图片搜索</h1>
-    {% include 'imgsearch_bar.html' %}   <!--比extends好用一些-->
-    {% block searchbar%}
-    {% endblock %}
+    <div class=logo>
+        <h1>NaÏve 图片搜索</h1>  
+        {% include 'switch_site.html' %}
+    </div>
+    <div class=searchBar>
+        {% include 'imgsearch_bar.html' %}   <!--比extends好用一些-->
+    </div>
 </body>
 </html> 

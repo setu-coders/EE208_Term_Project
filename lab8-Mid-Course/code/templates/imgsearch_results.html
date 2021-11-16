@@ -12,20 +12,13 @@
     }
     </style>
 <head>
-    <div class=title>
-        <h1>NaÏve 图片搜索</h1>
-    </div>
-    
-    <title>Search Results</title>
+    {% include 'imgsearch.html' %}
 </head>
 <body>
-    <div class=searchBar>
-        {% include 'imgsearch_bar.html' %}   <!--比extends好用一些-->
-    </div>
-    {% block searchbar%}
-    {% endblock %}
+    
+    
     <hr>
-    <h1>Searching Results:{{ command }},  {{doc_count}} pages found.</h1>
+    <h1>Searching for:{{ command }},  {{doc_count}} pages found.</h1>
     
     <div class="grid-container">
             

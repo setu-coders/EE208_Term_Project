@@ -1,5 +1,5 @@
-import SearchFiles_img as _imgsearch
-directory, searcher, analyzer = _imgsearch.init_search()
+import SearchFiles_zhCN
+directory, searcher, analyzer = SearchFiles_zhCN.init_search()
 command = input("command: ")
-docs = _imgsearch.get_search_res(command,50,searcher,analyzer)
+docs = SearchFiles_zhCN.get_search_res(command,searcher,analyzer)
 print(docs)

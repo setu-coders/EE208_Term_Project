@@ -21,7 +21,6 @@ def _index():
     return redirect(url_for('search'))
 # 都重定向到/search
 
-
 @app.route('/search', methods=['POST', 'GET'])
 def search():
     if request.method == "POST":
