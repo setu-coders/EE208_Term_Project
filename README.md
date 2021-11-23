@@ -18,3 +18,5 @@ Previously done labs included for reference.
 6. git push 出现...done代表大功告成！
 
 ## 总结: pull -> 写代码 -> （如果创建了新文件）add -> commit -> push 
+
+![avatar](./githelp.png)
