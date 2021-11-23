@@ -1,11 +1,12 @@
 import cv2
+from cv2 import cv2 # make vscode not complain
 from matplotlib import pyplot as plt
 import numpy as np
 def countRGB(img):
     RGB = np.array([0,0,0])
     for line in img:
-        for item in line:
-            RGB += item
+        for pixel in line:
+            RGB += pixel
     return RGB
 
 def plotRGB(filename):
