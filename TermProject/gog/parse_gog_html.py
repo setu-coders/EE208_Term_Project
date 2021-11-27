@@ -20,28 +20,37 @@ def get_self_url(content):
     st,ed = res.span()[0],res.span()[1]
     return content[st + off1:ed + off2]
 
-def get_domain(url):
+def get_domain(url): # 返回域名
     return urlparse(url).netloc
 
-def get_title(soup):
+def get_title(soup): # 返回游戏标题
     #soup = BeautifulSoup(content,features="html.parser")
     title_tag = soup.find("meta",{"property":"og:title"})
     title = title_tag.get("content",'')#.string
     return title
 
-def get_price(soup):
+def get_price(soup):  # 返回游戏价格
     tag_feat = "product-actions-price__final-amount _price ng-binding"
     tag_price = soup.find('span',{"class":tag_feat})
     return tag_price.string
 
-def get_description(soup):
+def get_description(soup): # 返回游戏简介
     desc_tag = soup.find("meta",{"property":"og:description"})
     desc = desc_tag.get("content",'')#.string
-    return title.strip()
+    return desc.strip()
 
-def get_genre(soup):
-    catg_tag = soup.find("a",{"href":re.compile("/games?category=?*")})
-
+def get_genre(soup): # 返回一个list，其中第0个元素是游戏category，后面的是tag。
+    res = []
+    catg_tag = soup.find("a",{"href":re.compile("games\?category=(...)")})
+    genre_href = catg_tag.get("href",'')
+    genre_name = catg_tag.string
+    res.append((genre_href, genre_name))
+    for sib in catg_tag.find_next_siblings():
+        genre_href = sib.get("href",'')
+        genre_name = sib.string
+        res.append((genre_href, genre_name))
+        
+    return res
 
 def test(root):
         """
@@ -71,9 +80,10 @@ def test(root):
                     #print(contents[:100])
                     page_url = get_self_url(contents)
                     page_domain = get_domain(page_url)
-                    page_title = get_title(soup)
-                    page_description = get_description(soup)
-                    page_price = get_price(soup)
+                    game_title = get_title(soup)
+                    game_description = get_description(soup)
+                    game_price = get_price(soup)
+                    game_genre = get_genre(soup)
                     #contents = clean_html(contents)
                     
                     #cut_words = jieba.cut_for_search(contents)    # requires paddlepaddle. -> pip install paddlepaddle
@@ -90,7 +100,8 @@ def test(root):
                     doc.add(Field("title", page_title, t1))
                     """
 
-                    print('\n'.join([filename,path,page_url,page_domain,page_title,page_description,page_price]))
+                    print('\n'.join([filename,path,page_url,page_domain,game_title,game_description,game_price]))
+                    print(game_genre)
                     """
                     if len(contents) > 0:
                         doc.add(Field("contents", contents, t2))
