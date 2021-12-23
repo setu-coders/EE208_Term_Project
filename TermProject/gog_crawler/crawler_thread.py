@@ -7,6 +7,7 @@ import string
 import sys
 from typing import final
 import urllib
+import requests
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -20,11 +21,12 @@ import argparse
 import bloomFilter  # 自己实现的BloomFilter类
 
 
-TIMEOUTSECONDS = 3 #访问超时时间
+TIMEOUTSECONDS = 5 #访问超时时间
 MAXFILENAMELENGTH = 50  #文件名最长不超过的长度
 SELF_URL_MARKER  = "SELF_URL_TAG:"   # 爬取到的网页写入文件时，在html文件末尾附上该网页的url方便查询
 
-header = {'User-Agent': 'user-agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.106 Safari/537.36 Edg/80.0.361.54'}
+header = {'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6',
+          'Referer': 'https://www.gog.com/'}
 
 def valid_filename(s):
     valid_chars = "-_(). %s%s" % (string.ascii_letters, string.digits)  
@@ -36,9 +38,12 @@ def get_page(page,coding = 'utf-8'):
     global successful
     global failed
     try:
-        request = Request(page, headers=header)
-        content = urlopen(request,timeout = TIMEOUTSECONDS).read()
-    except:
+        #request = Request(page, headers=header)
+        #content = urlopen(request,timeout = TIMEOUTSECONDS).read()
+        r = requests.get(page, allow_redirects=True)
+        content = r.content
+    except Exception as E:
+        print(E)
         raise ValueError
     else:
         return content.decode(coding)
@@ -76,25 +81,35 @@ def add_page_to_folder(page, content):
     f.write(str(content))
     f.close()
 
-def match_required_url(url,restriction_url):
-    return (restriction_url == '*' or restriction_url in url)
+def match_required_url(url,restriction_urls):
+    if not restriction_urls:
+        return True
+    for restr in restriction_urls:
+        if restr in url:
+            return True
+    return False
+
+def switch2zh(url):
+    return url.replace("/en/", "/zh/")
 
 count = 0
 MAXCOUNT = 50
 successful = 0
 failed = 0
-crawl_only = "https://www.gog.com/game/"
-
+crawl_only = ["https://www.gog.com/en/game","https://www.gog.com/zh/game","https://www.gog.com/game/"]
+save_only = "https://www.gog.com/zh/game/"
+MAXDEPTH = 1
 def crawl():
     global successful
     global failed
     global crawl_only
     while True:
         
-        page = q.get(block = True,timeout = TIMEOUTSECONDS)
+        page, curDepth = q.get(block = True,timeout = TIMEOUTSECONDS)
         if not crawled.find(page):
             #print("current page:",page)
             try:
+                page = switch2zh(page)
                 print("getting:",page)
                 content = get_page(page)
             except:
@@ -104,17 +119,18 @@ def crawl():
                 continue
             else:
                 successful += 1
-
-            add_page_to_folder(page, content)
+            if match_required_url(page, save_only):
+                add_page_to_folder(page, content)
             outlinks = get_all_links(content, page)
             #print(outlinks)
+            print(outlinks)
             global count
             for link in outlinks:
-                if (not crawled.find(link)) and count < MAXCOUNT and match_required_url(link,crawl_only):
-                    q.put(link)
+                if (not crawled.find(link)) and count < MAXCOUNT and match_required_url(link,crawl_only) and curDepth < MAXDEPTH:
+                    q.put((link, curDepth + 1))
                     count += 1
             if varLock.acquire():
-                graph[page] = outlinks
+                #graph[page] = outlinks
                 crawled.add(page)
                 varLock.release()
         print("Tasks left:",q.qsize())
@@ -131,12 +147,14 @@ if __name__ == '__main__':
     #max_page = int(sys.argv[3])
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-s")
+    #parser.add_argument("-s")
     parser.add_argument("-thread")
     parser.add_argument("-page")
     args = parser.parse_args()
 
-    seed = args.s                   #起始网页url
+    #seed = args.s   
+    #起始网页url
+    seeds = [f"https://www.gog.com/games?sort=title&page={i}" for i in range(1, 5)]
     THREAD_NUM = int(args.thread)   # 线程数
     MAXCOUNT = int(args.page)       #目标网页数
     
@@ -149,9 +167,11 @@ if __name__ == '__main__':
 
     bitset_len = 20 * MAXCOUNT
     crawled = bloomFilter.BloomFilter(bitset_len, bloomFilter.get_optimal_k(bitset_len,MAXCOUNT))
-    graph = {}
+    #graph = {}
 
-    q.put(seed)
+    for seed in seeds:
+        q.put((seed, 0))
+    
     for i in range(THREAD_NUM):
         t = threading.Thread(target=crawl)
         t.daemon = True
