@@ -19,14 +19,17 @@ import time
 from bs4 import BeautifulSoup
 import argparse
 import bloomFilter  # 自己实现的BloomFilter类
-
+from fake_useragent import UserAgent
 
 TIMEOUTSECONDS = 5 #访问超时时间
 MAXFILENAMELENGTH = 50  #文件名最长不超过的长度
 SELF_URL_MARKER  = "SELF_URL_TAG:"   # 爬取到的网页写入文件时，在html文件末尾附上该网页的url方便查询
-
-header = {'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6',
-          'Referer': 'https://www.gog.com/'}
+ua = UserAgent()
+header = {
+        'User-Agent': ua.random,
+        'Referer': 'https://www.gog.com/zh/game/cyberpunk_2077',
+        'Cookie': "gog_lc=CN_CNY_zh-Hans; _gcl_au=1.1.1023331159.1638773721; _ga=GA1.2.765414947.1638773721; cat_ab=old; csrf=true; cart_token=426eb3e696e3da04; gog_wantsmaturecontent=18"
+        }
 
 def valid_filename(s):
     valid_chars = "-_(). %s%s" % (string.ascii_letters, string.digits)  
@@ -48,7 +51,17 @@ def get_page(page,coding = 'utf-8'):
     else:
         return content.decode(coding)
 
+def get_all_links2(content, pageurl):
+    links = []
+    soup = BeautifulSoup(content, features="html.parser")
+    for url in re.findall(r"\"url\":\"(.*?),", content):
+        url = "zh/game/" + url[7:]
+        if url[:4] != "http":
+           url = urllib.parse.urljoin(pageurl,url) 
+        print(url)
+        links.append(url)
 
+    return links
 
 def get_all_links(content, page):  # html content, page url
     
@@ -60,6 +73,7 @@ def get_all_links(content, page):  # html content, page url
        
         if url[:4] != "http":
             url = urllib.parse.urljoin(page,url) 
+        
         links.append(url)
         
 
@@ -121,9 +135,9 @@ def crawl():
                 successful += 1
             if match_required_url(page, save_only):
                 add_page_to_folder(page, content)
-            outlinks = get_all_links(content, page)
+            outlinks = get_all_links2(content, page)
             #print(outlinks)
-            print(outlinks)
+            #print(outlinks)
             global count
             for link in outlinks:
                 if (not crawled.find(link)) and count < MAXCOUNT and match_required_url(link,crawl_only) and curDepth < MAXDEPTH:
@@ -154,7 +168,7 @@ if __name__ == '__main__':
 
     #seed = args.s   
     #起始网页url
-    seeds = [f"https://www.gog.com/games?sort=title&page={i}" for i in range(1, 5)]
+    seeds = [f"https://www.gog.com/games?sort=title&page={i}" for i in range(1, 2)]
     THREAD_NUM = int(args.thread)   # 线程数
     MAXCOUNT = int(args.page)       #目标网页数
     
